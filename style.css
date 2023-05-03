@@ -1,0 +1,58 @@
+.grid {
+    display: grid;
+
+    grid-template-areas: 
+    "h h" 
+    "a m"
+    "f f";
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 10vh 80vh 10vh;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-around;
+}
+
+header {
+    grid-area: h;
+}
+
+aside {
+    grid-area: a;
+}
+
+main {grid-area: m;}
+
+footer {grid-area: f;}
+
+
+li {
+    list-style: none;
+    margin-right: 20px;
+}
+
+header, aside, main, footer {
+    border: 1px solid red;
+}
+
+address {
+    display: flex;
+    justify-content: space-between;
+}
+
+.margin {
+    margin: 20px 10px;
+}
+
+.background-black {
+    background-color: black;
+    color: white;
+}
+
+.aside-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
