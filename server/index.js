@@ -2,6 +2,9 @@
 const express = require('express');
 const app = express();
 
-// Aplicação rodando na porta 3000.
-const PORT = process.env.PORT || 3000;
+// Importando rotas para requisições ligadas ao login.
+app.use('/', require('./routes/loginRoutes'));
+
+// Aplicação rodando na porta 3000 (padrão express).
+const PORT = 3000;
 app.listen(PORT, console.log("Server has started at port " + PORT));
