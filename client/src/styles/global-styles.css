@@ -1,0 +1,37 @@
+:root {
+  --green-100: #cee2d2;
+  --green-200: #74ad8a;
+  --green-300: #568a6e;
+  --green-400: #043c2c;
+
+  --normal-title: 700;
+  --bold-title: 800;
+
+  --normal-text: 400;
+  --bold-text: 700;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+body {
+  background-color: var(--green-100);
+  color: var(--green-400);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font: var(--normal-title) 2rem 'Baloo 2', cursive;
+}
+
+body, input, textarea, button {
+  font: var(--normal-text) 1rem 'Roboto', sans-serif;
+}
