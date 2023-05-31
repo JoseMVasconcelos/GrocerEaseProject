@@ -1,0 +1,14 @@
+.header {
+  background-color: var(--green-100);
+  padding: 0.5rem 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header > img {
+  width: 3.75rem;
+  height: 3.75rem;
+}

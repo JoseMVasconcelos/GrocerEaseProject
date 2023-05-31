@@ -1,4 +1,6 @@
 :root {
+  --white: #ffffff;
+
   --green-100: #cee2d2;
   --green-200: #74ad8a;
   --green-300: #568a6e;
@@ -23,7 +25,7 @@
 }
 
 body {
-  background-color: var(--green-100);
+  background-color: var(--white);
   color: var(--green-400);
   -webkit-font-smoothing: antialiased;
 }
