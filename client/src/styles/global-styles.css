@@ -24,6 +24,11 @@
   box-shadow: none;
 }
 
+::selection {
+  background-color: var(--green-300);
+  color: var(--green-100);
+}
+
 body {
   background-color: var(--white);
   color: var(--green-400);
@@ -35,5 +40,5 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body, input, textarea, button {
-  font: var(--normal-text) 1rem 'Roboto', sans-serif;
+  font: var(--normal-text) 1rem / 1.6 'Roboto', sans-serif;
 }
