@@ -1,0 +1,32 @@
+.pageContainer {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pageContainer > div {
+  width: 62.5%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pageContainer > div > a {
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 14px;
+  width: fit-content;
+
+  background-color: var(--green-400);
+  color: var(--white);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.pageContainer > div > a:hover {
+  background-color: var(--green-300);
+}

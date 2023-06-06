@@ -1,0 +1,33 @@
+.listCard {
+  background-color: var(--base-card);
+  border-radius: 6px;
+  padding: 1rem;
+  width: 24rem;
+}
+
+.listCard > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.listCard > header > h3 {
+  font-size: 1.25rem;
+}
+
+.listCard > header > span {
+  font-size: 0.875rem;
+}
+
+.listCard > p {
+  font-size: 1rem;
+
+  max-height: calc(1.6 * 1rem * 3);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}

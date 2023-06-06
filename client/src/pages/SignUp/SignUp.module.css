@@ -9,7 +9,7 @@
 }
 
 .formContainer {
-  background-color: #f3f2f2;
+  background-color: var(--base-card);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,8 +26,8 @@
   border-radius: 8px;
   border: 1.5px solid #ededed;
 
-  color: #8D8686;
-  background-color: #ededed;
+  color: var(--base-input-color);
+  background-color: var(--base-input);
 
   font-size: 0.875rem;
   transition: border-color 0.2s ease-in-out;

@@ -3,6 +3,7 @@ import { DefaultLayout } from '../layouts/DefaultLayout'
 import { Home } from '../pages/Home'
 import { SignUp } from '../pages/SignUp'
 import { SignIn } from '../pages/SignIn'
+import { ShoppingLists } from '../pages/ShoppingLists'
 
 export function Router() {
   return (
@@ -11,6 +12,7 @@ export function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/shopping-lists" element={<ShoppingLists />} />
       </Route>
     </Routes>
   )

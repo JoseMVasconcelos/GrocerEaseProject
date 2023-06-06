@@ -1,10 +1,15 @@
 :root {
+  /* REMEMBER -> remove unused variables */
   --white: #ffffff;
 
   --green-100: #cee2d2;
   --green-200: #74ad8a;
   --green-300: #568a6e;
   --green-400: #043c2c;
+
+  --base-card: #f3f2f2;
+  --base-input: #ededed;
+  --base-input-color: #8d8686;
 
   --normal-title: 700;
   --bold-title: 800;
