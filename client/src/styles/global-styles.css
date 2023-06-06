@@ -24,10 +24,10 @@
   box-shadow: none;
 }
 
-::selection {
+/* ::selection {
   background-color: var(--green-300);
   color: var(--green-100);
-}
+} */
 
 body {
   background-color: var(--white);
