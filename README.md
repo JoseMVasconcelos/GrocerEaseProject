@@ -12,7 +12,7 @@
 
 ### Frontend
 
-- [ ] grid listas
+- [x] grid listas
 - [ ] form nova lista
 - [ ] pagina lista
 
