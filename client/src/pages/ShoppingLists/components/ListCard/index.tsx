@@ -1,4 +1,5 @@
 import styles from './ListCard.module.css'
+import { Trash } from '@phosphor-icons/react'
 
 interface ListCardProps {
   title: string
@@ -13,7 +14,12 @@ export function ListCard({ title, description, createdAt }: ListCardProps) {
         <h3>{title}</h3>
         <span>{createdAt}</span>
       </header>
-      <p>{description}</p>
+      <div>
+        <p>{description}</p>
+        <div className={styles.iconContainer}>
+          <Trash size={22} />
+        </div>
+      </div>
     </article>
   )
 }

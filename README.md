@@ -8,7 +8,18 @@
 - [ ] Apagar listas
 - [ ] Compartilhar listas
 
-## Stack
+## Tasks
 
-- front: React.js
-- back: express.js + mongoDB
+### Frontend
+
+- [ ] grid listas
+- [ ] form nova lista
+- [ ] pagina lista
+
+### Backend
+
+- [ ] editar dados usuário
+- [ ] relação usuario lista
+- [ ] crud listas
+- [ ] relação lista produtos
+- [ ] Mock produtos
