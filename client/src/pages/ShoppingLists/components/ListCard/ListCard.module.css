@@ -3,6 +3,7 @@
   border-radius: 6px;
   padding: 1rem;
   width: 30rem;
+  max-width: 80vw;
 }
 
 .listCard > header {
