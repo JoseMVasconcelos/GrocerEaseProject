@@ -51,10 +51,16 @@
 }
 
 .iconContainer:hover {
-  background-color: var(--gray);
+  background-color: #dedede;
 }
+
 
 .iconContainer > svg {
   color: var(--green-400);
+  transition: color 0.125s ease-in-out;
+}
+
+.iconContainer:hover > svg {
+  color: var(--warning);
 }
 
