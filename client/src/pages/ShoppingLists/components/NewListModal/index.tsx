@@ -1,6 +1,7 @@
 import { X } from '@phosphor-icons/react'
 import styles from './NewListModal.module.css'
 import * as Dialog from '@radix-ui/react-dialog'
+import { CustomInput } from '../../../../components/CustomInput'
 
 export function NewListModal() {
   return (
@@ -20,7 +21,7 @@ export function NewListModal() {
             </button>
           </Dialog.Close>
           <form>
-            <input type="text" placeholder="Nova lista" />
+            <CustomInput inputType="text" placeholder="Nova lista" isRequired />
             <button>criar lista</button>
           </form>
         </Dialog.Content>

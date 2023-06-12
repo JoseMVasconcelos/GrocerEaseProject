@@ -1,3 +1,4 @@
+import { CustomInput } from '../../components/CustomInput'
 import styles from './../SignUp/SignUp.module.css'
 
 export function SignIn() {
@@ -5,8 +6,8 @@ export function SignIn() {
     <section className={styles.pageContainer}>
       <h1>Faça o seu login!</h1>
       <form className={styles.formContainer}>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Senha" />
+        <CustomInput inputType="email" placeholder="Email" isRequired />
+        <CustomInput inputType="password" placeholder="Senha" isRequired />
         <button>Fazer Login</button>
       </form>
     </section>

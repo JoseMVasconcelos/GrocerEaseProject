@@ -1,3 +1,4 @@
+import { CustomInput } from '../../components/CustomInput'
 import styles from './SignUp.module.css'
 
 export function SignUp() {
@@ -5,9 +6,9 @@ export function SignUp() {
     <section className={styles.pageContainer}>
       <h1>Realize o seu cadastro!</h1>
       <form className={styles.formContainer}>
-        <input type="email" placeholder="Email" />
-        <input type="text" placeholder="Nome completo" />
-        <input type="password" placeholder="Senha" />
+        <CustomInput isRequired inputType="email" placeholder="Email" />
+        <CustomInput isRequired inputType="text" placeholder="Nome completo" />
+        <CustomInput isRequired inputType="password" placeholder="Senha" />
         <button>Cadastrar-se</button>
       </form>
     </section>

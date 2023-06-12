@@ -20,23 +20,6 @@
   padding: 2.5rem;
 }
 
-.formContainer input {
-  width: 100%;
-  padding: 0.75rem;
-  border-radius: 8px;
-  border: 1.5px solid #ededed;
-
-  color: var(--base-input-color);
-  background-color: var(--base-input);
-
-  font-size: 0.875rem;
-  transition: border-color 0.2s ease-in-out;
-}
-
-.formContainer input:focus {
-  border-color: var(--green-300);
-}
-
 .formContainer button {
   border: none;
   cursor: pointer;
