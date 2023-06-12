@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styles from './Home.module.css'
+import { CustomButton } from '../../components/CustomButton'
 
 export function Home() {
   return (
@@ -10,8 +11,12 @@ export function Home() {
         <p>Faça o seu login ou cadastre-se para começar.</p>
       </div>
       <div className={styles.buttons}>
-        <Link to={'sign-up'}>Cadastro</Link>
-        <Link to={'sign-in'}>Login</Link>
+        <CustomButton fullWidth>
+          <Link to={'sign-up'}>Cadastro</Link>
+        </CustomButton>
+        <CustomButton fullWidth>
+          <Link to={'sign-in'}>Login</Link>
+        </CustomButton>
       </div>
     </section>
   )

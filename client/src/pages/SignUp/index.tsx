@@ -1,3 +1,4 @@
+import { CustomButton } from '../../components/CustomButton'
 import { CustomInput } from '../../components/CustomInput'
 import styles from './SignUp.module.css'
 
@@ -9,7 +10,7 @@ export function SignUp() {
         <CustomInput isRequired inputType="email" placeholder="Email" />
         <CustomInput isRequired inputType="text" placeholder="Nome completo" />
         <CustomInput isRequired inputType="password" placeholder="Senha" />
-        <button>Cadastrar-se</button>
+        <CustomButton fullWidth>Cadastrar-se</CustomButton>
       </form>
     </section>
   )

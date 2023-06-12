@@ -1,3 +1,4 @@
+import { CustomButton } from '../../components/CustomButton'
 import { CustomInput } from '../../components/CustomInput'
 import styles from './../SignUp/SignUp.module.css'
 
@@ -8,7 +9,7 @@ export function SignIn() {
       <form className={styles.formContainer}>
         <CustomInput inputType="email" placeholder="Email" isRequired />
         <CustomInput inputType="password" placeholder="Senha" isRequired />
-        <button>Fazer Login</button>
+        <CustomButton fullWidth>Fazer Login</CustomButton>
       </form>
     </section>
   )

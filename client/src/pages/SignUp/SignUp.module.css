@@ -20,7 +20,7 @@
   padding: 2.5rem;
 }
 
-.formContainer button {
+/* .formContainer button {
   border: none;
   cursor: pointer;
   text-transform: uppercase;
@@ -37,4 +37,4 @@
 .formContainer button:hover {
   background-color: var(--green-300);
 }
-
+ */
