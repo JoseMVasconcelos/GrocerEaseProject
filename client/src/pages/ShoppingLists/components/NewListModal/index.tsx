@@ -20,10 +20,14 @@ export function NewListModal() {
             <Dialog.Close className={styles.closeButton}>
               <X size={24} />
             </Dialog.Close>
+            <Dialog.Description className={styles.dialogDescription}>
+              Adicione um nome e descrição para criar a sua nova lista.
+            </Dialog.Description>
             <form>
+              <CustomInput inputType="text" placeholder="Nome" isRequired />
               <CustomInput
                 inputType="text"
-                placeholder="Nova lista"
+                placeholder="Descrição"
                 isRequired
               />
               <CustomButton fullWidth>criar lista</CustomButton>

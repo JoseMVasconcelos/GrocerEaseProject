@@ -1,4 +1,5 @@
 .listCard {
+  cursor: pointer;
   background-color: var(--base-card);
   border-radius: 6px;
   padding: 1rem;

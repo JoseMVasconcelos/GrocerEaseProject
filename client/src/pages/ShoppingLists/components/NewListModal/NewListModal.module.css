@@ -21,11 +21,11 @@
 
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
 }
 
 .dialogTitle {
   font-size: 1.75rem;
+  line-height: 1;
 }
 
 .closeButton {
@@ -58,4 +58,9 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+}
+
+.dialogDescription {
+  line-height: 1;
+  margin: 0.5rem 0 1rem;
 }
