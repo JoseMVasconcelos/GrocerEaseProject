@@ -6,7 +6,7 @@ const signUpSchema = joi.object({
     name: joi.string().alphanum().required(),
     email: joi.string().email().required(),
     password: joi.string().min(6).required(),
-    confirm_password: joi.ref('password')
+    confirm_password: joi.ref('password'),
 });
 
 module.exports = signUpSchema;

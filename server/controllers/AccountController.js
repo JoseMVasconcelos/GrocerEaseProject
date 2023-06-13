@@ -8,10 +8,10 @@ const router = express.Router();
 const jsonParser = express.json();
 
 // Importando UserService.
-const userService = require('../services/loginService');
+const userService = require('../services/AccountService');
 
 // Importando Validações.
-const { signUpSchema } = require('../validations/loginValidation');
+const { signUpSchema } = require('../validations/AccountValidation');
 
 // Cadastro do usuário
 router.post('/signUp', jsonParser, async (req, res) => {
