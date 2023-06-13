@@ -1,0 +1,40 @@
+.pageContainer {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.formContainer {
+  background-color: var(--base-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  width: 40rem;
+  border-radius: 6px;
+  padding: 2.5rem;
+}
+
+/* .formContainer button {
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-align: center;
+
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  background-color: var(--green-400);
+  color: var(--white);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.formContainer button:hover {
+  background-color: var(--green-300);
+}
+ */

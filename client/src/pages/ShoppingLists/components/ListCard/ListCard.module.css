@@ -1,0 +1,67 @@
+.listCard {
+  cursor: pointer;
+  background-color: var(--base-card);
+  border-radius: 6px;
+  padding: 1rem;
+  width: 30rem;
+  max-width: 80vw;
+}
+
+.listCard > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.listCard > header > h3 {
+  font-size: 1.25rem;
+}
+
+.listCard > header > span {
+  font-size: 0.875rem;
+}
+
+.listCard > div {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.listCard > div > p {
+  font-size: 1rem;
+  width: 90%;
+
+  max-height: calc(1.6 * 1rem * 3);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 4px;
+  transition: background-color 0.125s ease-in-out;
+}
+
+.iconContainer:hover {
+  background-color: #dedede;
+}
+
+
+.iconContainer > svg {
+  color: var(--green-400);
+  transition: color 0.125s ease-in-out;
+}
+
+.iconContainer:hover > svg {
+  color: var(--warning);
+}
+

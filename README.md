@@ -1,14 +1,44 @@
 # GrocerEase
 
-## Funcionalidades WIP
+## Tasks
 
-- [ ] Autenticação
-- [ ] Criar uma lista de compras
-- [ ] Editar listas
-- [ ] Apagar listas
-- [ ] Compartilhar listas
+### Frontend
 
-## Stack
+- [x] grid listas
+- [x] form nova lista
+- [x] pagina lista
+- [ ] modal para editar dados do usuário (...)
+- [ ] mudar scrollbar
+- [ ] mudar ::selection
+- [ ] checar responsividade
+- [ ] integração com a API + funcionalidades básicas
 
-- front: React.js
-- back: express.js + mongoDB
+### Backend
+
+- [x] mock produtos
+- [ ] editar dados usuário
+- [ ] relação usuario lista
+- [ ] criação e remoção de listas
+- [ ] relação lista produtos
+
+## 🚀 Setup
+
+Clone esse repositório:
+
+```bash
+    # clona o repositório
+    git clone https://github.com/JoseMVasconcelos/GrocerEaseProject.git
+```
+
+Para rodar o frontend vá para a pasta do projeto e execute os seguintes comandos:
+
+```bash
+    # entra na pasta client
+    cd client
+
+    # instala as dependências
+    npm i
+
+    # roda localmente em http://localhost:5173/
+    npm run dev
+```
