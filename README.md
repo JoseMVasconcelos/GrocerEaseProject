@@ -6,8 +6,12 @@
 
 - [x] grid listas
 - [x] form nova lista
-- [ ] pagina lista (...)
+- [x] pagina lista
 - [ ] modal para editar dados do usuário (...)
+- [ ] mudar scrollbar
+- [ ] mudar ::selection
+- [ ] checar responsividade
+- [ ] integração com a API + funcionalidades básicas
 
 ### Backend
 
