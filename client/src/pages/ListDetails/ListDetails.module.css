@@ -1,0 +1,32 @@
+.pageContainer {
+  flex: 1;
+  margin: 4rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.pageContainer > form {
+  width: 90%;
+  display: flex;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.pageContainer > form input {
+  flex: 1;
+}
+
+.listProducts {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.listProducts > h2 {
+  font-size: 1.75rem;
+}
+

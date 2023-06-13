@@ -12,21 +12,24 @@ export function NewListModal() {
         <CustomButton fullWidth={false}>criar nova lista</CustomButton>
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay className={styles.dialogOverlay} />
-        <Dialog.Content className={styles.dialogContent}>
-          <Dialog.Title className={styles.dialogTitle}>
-            Crie uma nova lista de compras
-          </Dialog.Title>
-          <Dialog.Close asChild>
-            <button className={styles.closeButton}>
+        <Dialog.Overlay className={styles.dialogOverlay}>
+          <Dialog.Content className={styles.dialogContent}>
+            <Dialog.Title className={styles.dialogTitle}>
+              Crie uma nova lista de compras
+            </Dialog.Title>
+            <Dialog.Close className={styles.closeButton}>
               <X size={24} />
-            </button>
-          </Dialog.Close>
-          <form>
-            <CustomInput inputType="text" placeholder="Nova lista" isRequired />
-            <CustomButton fullWidth>criar lista</CustomButton>
-          </form>
-        </Dialog.Content>
+            </Dialog.Close>
+            <form>
+              <CustomInput
+                inputType="text"
+                placeholder="Nova lista"
+                isRequired
+              />
+              <CustomButton fullWidth>criar lista</CustomButton>
+            </form>
+          </Dialog.Content>
+        </Dialog.Overlay>
       </Dialog.Portal>
     </Dialog.Root>
   )

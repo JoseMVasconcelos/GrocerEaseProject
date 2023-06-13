@@ -1,8 +1,9 @@
 .dialogOverlay {
   position: fixed;
   inset: 0;
-  background-color: var(--green-100);
-  opacity: 0.9;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(206, 226, 210, 0.9);
 }
 
 .dialogContent {
