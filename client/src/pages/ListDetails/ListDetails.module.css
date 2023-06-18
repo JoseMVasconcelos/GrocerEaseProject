@@ -30,3 +30,18 @@
   font-size: 1.75rem;
 }
 
+@media screen and (max-width: 32rem) {
+  .pageContainer h1 {
+    font-size: 1.5rem;
+  }
+
+  .pageContainer > form {
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .listProducts > h2 {
+    font-size: 1.25rem;
+  }
+
+}

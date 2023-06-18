@@ -36,3 +36,18 @@
   text-decoration: none;
   color: var(--white);
 }
+
+@media screen and (max-width: 42.5rem) {
+  .pageContainer h1 {
+    font-size: 2rem;
+  }
+
+  .pageContainer p {
+    font-size: 1rem;
+  }
+
+  .buttons {
+    width: 20rem;
+    max-width: 80vw;
+  }
+}

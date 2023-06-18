@@ -1,10 +1,21 @@
 .header {
   background-color: var(--green-100);
-  padding: 0.5rem 15rem;
+  width: 100%;
+}
+
+.contentContainer {
+  width: 100%;
+  max-width: 1000px;
+  padding: 0.5rem 1.5rem;
+  margin: 0 auto;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.userPopoverHidden {
+  justify-content: center;
 }
 
 .logo {

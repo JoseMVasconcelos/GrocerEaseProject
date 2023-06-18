@@ -16,25 +16,17 @@
   gap: 1rem;
 
   width: 40rem;
+  max-width: 90vw;
   border-radius: 6px;
   padding: 2.5rem;
 }
 
-/* .formContainer button {
-  border: none;
-  cursor: pointer;
-  text-transform: uppercase;
-  text-align: center;
+@media screen and (max-width: 32rem) {
+  .pageContainer h1 {
+    font-size: 1.5rem;
+  }
 
-  border-radius: 8px;
-  padding: 0.5rem 0.75rem;
-  width: 100%;
-  background-color: var(--green-400);
-  color: var(--white);
-  transition: background-color 0.2s ease-in-out;
+  .formContainer {
+    padding: 2rem 1rem;
+  }
 }
-
-.formContainer button:hover {
-  background-color: var(--green-300);
-}
- */

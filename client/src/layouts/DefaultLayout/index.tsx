@@ -5,7 +5,7 @@ import styles from './DefaultLayout.module.css'
 export function DefaultLayout() {
   return (
     <>
-      <Header />
+      <Header isLoggedIn={true} />
       <main className={styles.pageContainer}>
         <Outlet />
       </main>
