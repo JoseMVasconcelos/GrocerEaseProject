@@ -3,6 +3,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import styles from './UserPopover.module.css'
 import { User, X } from '@phosphor-icons/react'
 import { EditUserDataModal } from '../EditUserDataModal'
+import { LogoutModal } from '../LogoutModal'
 
 export function UserPopover() {
   return (
@@ -20,7 +21,12 @@ export function UserPopover() {
             </Dialog.Trigger>
             <EditUserDataModal />
           </Dialog.Root>
-          <button className={styles.popoverButton}>Sair</button>
+          <Dialog.Root>
+            <Dialog.Trigger asChild>
+              <button className={styles.popoverButton}>Sair</button>
+            </Dialog.Trigger>
+            <LogoutModal />
+          </Dialog.Root>
           <Popover.Close className={styles.closeButton}>
             <X size={16} />
           </Popover.Close>
