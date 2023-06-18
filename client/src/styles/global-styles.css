@@ -1,5 +1,5 @@
 :root {
-  /* REMEMBER -> remove unused variables */
+  /* TODO -> remove unused variables */
   --white: #ffffff;
 
   --green-100: #cee2d2;
@@ -48,4 +48,23 @@ h1, h2, h3, h4, h5, h6 {
 
 body, input, textarea, button {
   font: var(--normal-text) 1rem / 1.6 'Roboto', sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--green-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--green-400);
+}
+
+@supports (scrollbar-color: var(--green-400) var(--green-100)) {
+  * {
+    scrollbar-color: var(--green-400) var(--green-100);
+    scrollbar-width: auto;
+  }
 }
