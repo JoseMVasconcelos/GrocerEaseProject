@@ -1,0 +1,75 @@
+.triggerButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--green-200);
+  transition: background-color 0.125s ease-in-out;
+}
+
+.triggerButton:hover {
+  background-color: var(--green-400);
+}
+
+.triggerButton > svg {
+  color: var(--green-100);
+}
+
+.popoverContent {
+  position: relative;
+
+  width: 12.5rem;
+  border-radius: 8px 4px;
+  background-color: var(--green-300);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popoverButton {
+  font-size: 0.875rem;
+  color: var(--white);
+  padding: 0.4rem 0;
+  width: 100%;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: color 0.125s ease-in-out;
+}
+
+.popoverButton:nth-of-type(1) {
+  border-bottom: 1px solid var(--green-100);
+}
+
+.popoverButton:nth-of-type(1):hover {
+  color: var(--green-100);
+}
+
+.popoverButton:nth-of-type(2):hover {
+  color: var(--warning);
+}
+
+.closeButton {
+  position: absolute;
+  top: 0.3rem;
+  right: 0.5rem;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--white);
+  transition: color 0.125s ease-in-out;
+}
+
+.closeButton:hover {
+  color: var(--warning);
+}
+
+.popoverArrow {
+  fill: var(--green-300);
+}

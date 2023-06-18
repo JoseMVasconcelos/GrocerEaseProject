@@ -1,6 +1,6 @@
 import styles from './Header.module.css'
 import logo from './../../assets/logo.png'
-import { EditUserDataModal } from '../EditUserDataModal'
+import { UserPopover } from '../UserPopover'
 
 export function Header() {
   return (
@@ -8,7 +8,7 @@ export function Header() {
       <div className={styles.logo}>
         <img src={logo} alt="" />
       </div>
-      <EditUserDataModal />
+      <UserPopover />
     </header>
   )
 }
