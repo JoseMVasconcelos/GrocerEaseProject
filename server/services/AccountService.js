@@ -35,4 +35,4 @@ async function SignUp(userCredentials) {
     return createdUser;
 }
 
-module.exports = SignUp;
+module.exports = { SignUp };

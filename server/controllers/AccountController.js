@@ -8,24 +8,25 @@ const router = express.Router();
 const jsonParser = express.json();
 
 // Importando UserService.
-const userService = require('../services/AccountService');
+const accountService = require('../services/AccountService');
 
 // Importando Validações.
-const { signUpSchema } = require('../validations/AccountValidation');
+const { validate:signUpSchema } = require('../validations/AccountValidation');
 
 // Cadastro do usuário
 router.post('/signUp', jsonParser, async (req, res) => {
     try {
-        const error = signUpSchema.validate(req.body);
+        const { error } = signUpSchema.validate(req.body);
         if (!error) {
-            const result = await userService.SignUp(body);
-            res.sendStatus(201).json({ message: "Usuário cadastrado com sucesso.", data: result });
+            const result = await accountService.SignUp(req.body);
+            return res.status(201).json({ message: "Usuário cadastrado com sucesso.", data: result });
         }
-        res.sendStatus(400).json({ error: 'Bad Request', exception: error });
+        return res.status(400).json({ error: 'Bad Request', exception: error });
     } catch (error) {
-        res.sendStatus(500).json({ error: 'Internal Server Error', exception: error });
+        return res.status(500).json({ error: 'Internal Server Error', exception: error });
     }
-});  
+});
+ 
 
 // Exportando o router.
 module.exports = router;
