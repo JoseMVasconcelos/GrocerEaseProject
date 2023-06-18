@@ -15,7 +15,7 @@ mongoose.connect(database, {useUnifiedTopology: true, useNewUrlParser: true})
     .catch(error => console.log(error));
 
 // Importando rotas para requisições ligadas ao login.
-app.use('/user', require('./controllers/loginController'));
+app.use('/user', require('./controllers/AccountController'));
 
 // Aplicação rodando na porta 3000 (padrão express).
 const PORT = 3000;

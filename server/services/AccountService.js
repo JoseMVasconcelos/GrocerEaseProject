@@ -8,14 +8,6 @@ const bcrypt = require('bcryptjs');
 async function SignUp(userCredentials) {
     const { name, email, password, confirm } = userCredentials;
 
-    if (!name || !email || !password || !confirm) {
-        throw new Error('Parametro não preenchido');
-    }
-
-    if (password !== confirm) {
-        throw new Error('As senhas devem ser iguais.');
-    }
-
     const userExists = await User.findOne({ email });
     if (userExists) {
         throw new Error('O usuário já existe.');
@@ -43,4 +35,4 @@ async function SignUp(userCredentials) {
     return createdUser;
 }
 
-module.exports = SignUp;
+module.exports = { SignUp };
