@@ -31,10 +31,9 @@
   box-shadow: none;
 }
 
-/* ::selection {
-  background-color: var(--green-300);
-  color: var(--green-100);
-} */
+::selection {
+  background-color: var(--green-100);
+}
 
 body {
   background-color: var(--white);
