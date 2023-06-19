@@ -12,6 +12,7 @@ const database = process.env.MONGOLAB_URI;
 
 // Rotas
 const userRouter = require('./controllers/AccountController')
+const shoppingListsRouter = require('./controllers/ShoppingListsController')
 
 mongoose.connect(database, {useUnifiedTopology: true, useNewUrlParser: true})
     .then(() => console.log('database connected'))
@@ -20,6 +21,7 @@ mongoose.connect(database, {useUnifiedTopology: true, useNewUrlParser: true})
 app.use(express.json())
 // Importando rotas para requisições ligadas ao login.
 app.use('/', userRouter);
+app.use('/shoppingLists', shoppingListsRouter);
 
 // Aplicação rodando na porta 3000 (padrão express).
 const PORT = 3000;
