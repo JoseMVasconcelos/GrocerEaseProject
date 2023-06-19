@@ -1,20 +1,17 @@
 // Importando Express.
-var express = require('express');
+const express = require('express');
 
 // Router do Express.
 const router = express.Router();
-
-// Body-Parser.
-const jsonParser = express.json();
 
 // Importando UserService.
 const accountService = require('../services/AccountService');
 
 // Importando Validações.
-const { validate:signUpSchema } = require('../validations/AccountValidation');
+const signUpSchema = require('../validations/AccountValidation');
 
 // Cadastro do usuário
-router.post('/signUp', jsonParser, async (req, res) => {
+router.post('/signUp', async (req, res) => {
     try {
         const { error } = signUpSchema.validate(req.body);
         if (!error) {

@@ -9,6 +9,4 @@ const signUpSchema = joi.object({
     confirm_password: joi.ref('password'),
 });
 
-module.exports = {
-  validate: signUpSchema,
-};
+module.exports = signUpSchema

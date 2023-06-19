@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 
 // Cadastro.
 async function SignUp(userCredentials) {
-    const { name, email, password, confirm } = userCredentials;
+    const { name, email, password } = userCredentials;
 
     const userExists = await User.findOne({ email });
     if (userExists) {
