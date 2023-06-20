@@ -18,6 +18,7 @@
 ### Backend
 
 - [x] mock produtos
+- [x] processo de autenticação
 - [ ] editar dados usuário
 - [ ] relação usuario lista
 - [ ] criação e remoção de listas
