@@ -1,7 +1,7 @@
 const ShoppingList = require('./../models/shoppingList');
 
 async function getAllLists(ownerId) {
-    const shoppingLists = await ShoppingList.find({ author: ownerId });
+    const shoppingLists = await ShoppingList.find({ owner: ownerId });
     return shoppingLists
 }
 
@@ -13,7 +13,7 @@ async function createNewList(ownerId, payload) {
 }
 
 async function updateList(id, payload) {
-    await ShoppingList.findByIdAndUpdate(listId, payload)
+    await ShoppingList.findByIdAndUpdate(id, payload)
 }
 
 async function deleteList(id) {

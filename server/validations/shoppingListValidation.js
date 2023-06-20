@@ -1,10 +1,22 @@
 const joi = require('joi');
 
-const listSchema = joi.object({
-    name: joi.string().alphanum().required(),
-    description: joi.string().alphanum().required(),
+const createNewListSchema = joi.object({
+    name: joi.string().required(),
+    description: joi.string().required(),
+});
+
+const updateListSchema = joi.object({
+    name: joi.string().required(),
+    description: joi.string().required(),
+    products: joi.array().items(
+        joi.object({
+            name: joi.string().required(),
+            isChecked: joi.boolean().required(),
+        })
+    ).required()
 });
 
 module.exports = {
-    listSchema,
+    createNewListSchema,
+    updateListSchema
 };

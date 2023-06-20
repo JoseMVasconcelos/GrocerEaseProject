@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { getAllLists, createNewList, updateList, deleteList } = require('./../services/ShoppingListsService')
-const { listSchema } = require('./../validations/shoppingListValidation')
+const { createNewListSchema, updateListSchema } = require('./../validations/shoppingListValidation')
 
 router.get('/:ownerId', async (req, res) => {
     try {
@@ -17,9 +17,9 @@ router.get('/:ownerId', async (req, res) => {
 router.post('/:ownerId', async (req, res) => {
     try {
         const { ownerId } = req.params;
-        const { validationError } = listSchema.validate(req.body)
-        if (validationError) {
-            return res.status(400).json({ exception: validationError });
+        const { error } = createNewListSchema.validate(req.body)
+        if (error) {
+            return res.status(400).json({ exception: error });
         }
 
         const shoppingList = await createNewList(ownerId, req.body)
@@ -32,12 +32,12 @@ router.post('/:ownerId', async (req, res) => {
 router.put('/:listId', async (req, res) => {
     try {
         const { listId } = req.params;
-        const { validationError } = listSchema.validate(req.body)
-        if (validationError) {
-            return res.status(400).json({ exception: validationError });
+        const { error } = updateListSchema.validate(req.body)
+        if (error) {
+            return res.status(400).json({ exception: error });
         }
 
-        const shoppingList = await createNewList(listId, req.body)
+        await updateList(listId, req.body)
         return res.status(200).json({ message: "Lista atualizada com sucesso" });
     } catch (error) {
         return res.status(500).json({ exception: error });
