@@ -1,7 +1,11 @@
 // Importando biblioteca para geração de JWT.
 const jwt = require('jsonwebtoken');
 
-// Geração de um JSON Web Token de um usuário.
+/**
+ * Cria um novo usuário no sistema.
+ * @param {Object} user - Objeto User.
+ * @returns {String} - Token de acesso.
+ */
 function GenerateBearerToken(user) {
     const payload = {
         userId: user.id,

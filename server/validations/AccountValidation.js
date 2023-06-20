@@ -9,6 +9,7 @@ const signUpSchema = joi.object({
     confirm_password: joi.ref('password'),
 });
 
+// Esquema de validação para o login.
 const loginSchema = joi.object({
     email: joi.string().required(),
     password: joi.string().required(),
