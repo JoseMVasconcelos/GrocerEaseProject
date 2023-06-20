@@ -16,7 +16,12 @@ const updateListSchema = joi.object({
     ).required()
 });
 
+const shareListSchema = joi.object({
+    newOwnerId: joi.string().required()
+});
+
 module.exports = {
     createNewListSchema,
-    updateListSchema
+    updateListSchema,
+    shareListSchema
 };

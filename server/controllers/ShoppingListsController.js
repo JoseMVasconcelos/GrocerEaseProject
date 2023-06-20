@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const { getAllLists, createNewList, updateList, deleteList } = require('./../services/ShoppingListsService')
-const { createNewListSchema, updateListSchema } = require('./../validations/shoppingListValidation')
+const { getAllLists, createNewList, updateList, deleteList, shareList } = require('./../services/ShoppingListsService')
+const { createNewListSchema, updateListSchema, shareListSchema } = require('./../validations/shoppingListValidation')
 
 router.get('/:ownerId', async (req, res) => {
     try {
@@ -49,6 +49,20 @@ router.delete('/:listId', async (req, res) => {
         const { listId } = req.params;
         await deleteList(listId)
         return res.status(200).json({ message: "Lista deletada com sucesso!" });
+    } catch (error) {
+        return res.status(500).json({ exception: error });
+    }
+})
+
+router.post('/share/:listId', async (req, res) => {
+    try {
+        const { listId } = req.params;
+        const { error } = shareListSchema.validate(req.body)
+        if (error) {
+            return res.status(400).json({ exception: error });
+        }
+        await shareList(listId, req.body.newOwnerId)
+        return res.status(200).json({ message: "Lista compartilhada com sucesso!" });
     } catch (error) {
         return res.status(500).json({ exception: error });
     }
