@@ -4,6 +4,8 @@ const User = require('../models/UserModel');
 // Importando middleware para criptografia de senha.
 const bcrypt = require('bcryptjs');
 
+const authService = require('../services/AuthService');
+
 // Cadastro.
 async function SignUp(userCredentials) {
     const { name, email, password } = userCredentials;
@@ -35,4 +37,28 @@ async function SignUp(userCredentials) {
     return createdUser;
 }
 
-module.exports = { SignUp };
+async function Login(userCredentials) {
+    const { email, password } = userCredentials;
+
+    const user = await User.findOne({ email });
+
+    const passwordIsCorrect = bcrypt.compareSync(password, user.password);
+
+    // Se o usuário não existir, ou se a senha estiver incorreta, retornará nulo.
+    if (!user || !passwordIsCorrect) {
+        const unauthorizedResponse = {
+            message: 'Credenciais inválidas',
+            status: 401
+        };
+        return unauthorizedResponse
+    }
+
+    const userToken = authService.GenerateBearerToken(user);
+
+    return userToken;
+}
+
+module.exports = { 
+    SignUp,
+    Login,
+};
