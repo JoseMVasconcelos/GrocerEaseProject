@@ -43,5 +43,18 @@ router.post('/login', async (req, res) => {
     }
 });
 
+
+// Atualizacao do usuário
+router.put('/users/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const updateData = req.body;
+        const result = await accountService.Update(userId, updateData);
+        return res.status(201).json({ message: "Usuário atualizado com sucesso.", data: result });
+    } catch (error) {
+        return res.status(500).json({exception: error });
+    }
+});
+
 // Exportando o router.
 module.exports = router;

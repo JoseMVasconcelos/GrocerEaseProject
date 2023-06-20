@@ -58,7 +58,32 @@ async function Login(userCredentials) {
     return userToken;
 }
 
+// Atualizacao.
+async function Update(userId, updateData) {
+    const { name, email, password } = updateData;
+
+    const existingUser = await User.findById(userId);
+
+    // Criptografando senha.
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Atualizando usuario
+    existingUser.name = name
+    existingUser.email = email
+    existingUser.password = hashedPassword
+
+    // Salvando na base.
+    await existingUser.save();
+
+    return {
+        name: existingUser.name,
+        email: existingUser.email
+    };
+}
+
 module.exports = { 
     SignUp,
     Login,
+    Update,
 };
