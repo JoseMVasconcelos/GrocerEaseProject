@@ -46,7 +46,7 @@ Para rodar o frontend vá para a pasta do projeto e execute os seguintes comando
     npm run dev
 ```
 
-Para rodar o frontend vá para a pasta do projeto e execute os seguintes comandos:
+Para rodar o backend vá para a pasta do projeto e execute os seguintes comandos:
 
 ```bash
     # entra na pasta server
