@@ -10,7 +10,7 @@ const shoppingListSchema = new Schema({
             isChecked: Boolean
         }
     ],
-    owner: { type: Schema.Types.ObjectId, ref: 'User' }
+    owners: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 })
 
 module.exports = mongoose.model('ShoppingList', shoppingListSchema);
