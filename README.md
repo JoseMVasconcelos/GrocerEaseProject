@@ -45,3 +45,16 @@ Para rodar o frontend vá para a pasta do projeto e execute os seguintes comando
     # roda localmente em http://localhost:5173/
     npm run dev
 ```
+
+Para rodar o frontend vá para a pasta do projeto e execute os seguintes comandos:
+
+```bash
+    # entra na pasta server
+    cd server
+
+    # instala as dependências
+    npm i
+
+    # roda localmente em http://localhost:3000/
+    npm run dev
+```
