@@ -1,33 +1,57 @@
 const express = require('express');
 const router = express.Router();
 
-const ShoppingList = require('./../models/shoppingList');
+const { getAllLists, createNewList, updateList, deleteList } = require('./../services/ShoppingListsService')
+const { listSchema } = require('./../validations/shoppingListValidation')
 
 router.get('/:ownerId', async (req, res) => {
-    const { ownerId } = req.params;
-    const shoppingLists = await ShoppingList.find({ author: ownerId });
-    res.json(shoppingLists)
+    try {
+        const { ownerId } = req.params
+        const shoppingLists = await getAllLists(ownerId)
+        return res.status(400).json(shoppingLists)
+    } catch (error) {
+        return res.status(500).json({ exception: error });
+    }
 })
 
 router.post('/:ownerId', async (req, res) => {
-    const { ownerId } = req.params;
-    const { name, description } = req.body
-    const shoppingList = new ShoppingList({name, description})
-    shoppingList.owner = ownerId
-    await shoppingList.save()
-    return res.status(201).json({ message: "test" });
+    try {
+        const { ownerId } = req.params;
+        const { validationError } = listSchema.validate(req.body)
+        if (validationError) {
+            return res.status(400).json({ exception: validationError });
+        }
+
+        const shoppingList = await createNewList(ownerId, req.body)
+        return res.status(201).json({ message: "Lista criada com sucesso", data: shoppingList });
+    } catch (error) {
+        return res.status(500).json({ exception: error });
+    }
 })
 
 router.put('/:listId', async (req, res) => {
-    const { listId } = req.params;
-    await ShoppingList.findByIdAndUpdate(listId, req.body)
-    return res.status(201).json({ message: "test" });
+    try {
+        const { listId } = req.params;
+        const { validationError } = listSchema.validate(req.body)
+        if (validationError) {
+            return res.status(400).json({ exception: validationError });
+        }
+
+        const shoppingList = await createNewList(listId, req.body)
+        return res.status(200).json({ message: "Lista atualizada com sucesso" });
+    } catch (error) {
+        return res.status(500).json({ exception: error });
+    }
 })
 
 router.delete('/:listId', async (req, res) => {
-    const { listId } = req.params;
-    await ShoppingList.findByIdAndRemove(listId)
-    return res.status(201).json({ message: "test" });
+    try {
+        const { listId } = req.params;
+        await deleteList(listId)
+        return res.status(200).json({ message: "Lista deletada com sucesso!" });
+    } catch (error) {
+        return res.status(500).json({ exception: error });
+    }
 })
 
 module.exports = router
