@@ -19,10 +19,10 @@
 
 - [x] mock produtos
 - [x] processo de autenticação
-- [ ] editar dados usuário
-- [ ] relação usuario lista
-- [ ] criação e remoção de listas
-- [ ] relação lista produtos
+- [x] editar dados usuário
+- [x] relação usuario lista
+- [x] criação e remoção de listas
+- [x] relação lista produtos
 
 ## 🚀 Setup
 
@@ -58,3 +58,17 @@ Para rodar o **backend** vá para a pasta do projeto e execute os seguintes coma
     # roda localmente em http://localhost:3000/
     npm run dev
 ```
+## Bibliotecas Utilizadas:
+
+### Backend
+
+- bcryptjs:
+- cors:
+- dotenv:
+- express:
+- joi:
+- jsonwebtoken:
+- mongodb:
+- mongoose:
+- passport:
+- nodemon:
