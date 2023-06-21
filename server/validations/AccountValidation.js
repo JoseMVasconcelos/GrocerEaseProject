@@ -16,7 +16,16 @@ const loginSchema = joi.object({
     password: joi.string().required(),
 });
 
+// Esquema de validação para cadastro.
+const patchSchema = joi.object({
+    // O regex permite alphanumericos com espaços entre os nomes.
+    name: joi.string().regex(/(\w+\s*)+/),
+    email: joi.string().email(),
+    password: joi.string().min(6),
+});
+
 module.exports = {
     signUpSchema,
     loginSchema,
+    patchSchema,
 }

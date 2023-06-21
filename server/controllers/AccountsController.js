@@ -77,6 +77,10 @@ router.patch('/users/', TokenAuthenticator, async (req, res) => {
     try {
         const userId = req.userData.userId;
         const updateData = req.body;
+
+        const { error } = patchSchema.validate(updateData);
+        if (error) return res.status(400).json({ exception:  error});
+
         const patchResult = await patchUser(userId, updateData);
         if (patchResult && patchResult.status === 401){
             return res.status(401).json({message: patchResult.message});
