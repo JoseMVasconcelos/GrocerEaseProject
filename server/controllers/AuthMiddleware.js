@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
  * A cada requisição feita esse middleware é chamado.
  * @returns {Object} - Objeto contendo Id, nome e email do usuário cadastrado.
  */
-function TokenAuthentication(req, res, next) {
+function TokenAuthenticator(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1]
 
@@ -31,4 +31,4 @@ function TokenAuthentication(req, res, next) {
     });
 }
 
-module.exports = TokenAuthentication;
+module.exports = TokenAuthenticator;

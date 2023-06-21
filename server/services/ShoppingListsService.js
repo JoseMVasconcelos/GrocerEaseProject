@@ -1,4 +1,4 @@
-const ShoppingList = require('./../models/shoppingList');
+const ShoppingList = require('../models/ShoppingListModel');
 
 /**
  * Obtém todas as listas de um usuário.

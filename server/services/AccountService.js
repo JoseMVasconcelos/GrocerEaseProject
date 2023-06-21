@@ -1,6 +1,9 @@
 // Importanado modelo de usuário da base de dados.
 const User = require('../models/UserModel');
 
+// Importando modelo de lista de tokens inválidos da base de dados.
+const InvalidToken = require('../models/InvalidTokenModel');
+
 // Importando middleware para criptografia de senha.
 const bcrypt = require('bcryptjs');
 
@@ -72,6 +75,15 @@ async function login(userCredentials) {
 }
 
 /**
+ * Faz o logout do usuário no sistema.
+ * @param {String} userToken - Token do usuário.
+ */
+async function logout(userToken) {
+    const logoutResult = new InvalidToken(userToken);
+    await logoutResult.save();
+}
+
+/**
  * Atualiza o cadastro do usuário já existente
  * @param {String} userId - Id do usuário que será atualizado.
  * @param {Object} updateData - Atributos do usuário: name, email, password.
@@ -111,5 +123,6 @@ async function patchUser(userId, updateData) {
 module.exports = { 
     signUp,
     login,
+    logout,
     patchUser,
 };
