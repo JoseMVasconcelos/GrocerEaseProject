@@ -7,7 +7,7 @@ const ShoppingList = require('../models/ShoppingListModel');
  */
 async function getAllLists(ownerId) {
     const shoppingLists = await ShoppingList.find({ owners: { $in: [ownerId] } });
-    return shoppingLists
+    return shoppingLists;
 }
 
 /**
@@ -17,27 +17,27 @@ async function getAllLists(ownerId) {
  * @returns {Object} - Lista de compras.
  */
 async function createNewList(ownerId, payload) {
-    const shoppingList = new ShoppingList(payload)
-    shoppingList.owners.push(ownerId)
-    await shoppingList.save()
-    return shoppingList
+    const shoppingList = new ShoppingList(payload);
+    shoppingList.owners.push(ownerId);
+    await shoppingList.save();
+    return shoppingList;
 }
 
 /**
  * Atualiza uma lista de compras.
- * @param {String} id - Id da lista.
+ * @param {String} listId - Id da lista.
  * @param {String} payload - Dados da lista.
  */
-async function updateList(id, payload) {
-    await ShoppingList.findByIdAndUpdate(id, payload)
+async function updateList(listId, payload) {
+    await ShoppingList.findByIdAndUpdate(listId, payload);
 }
 
 /**
  * Deleta uma lista de compras.
- * @param {String} id - Id da lista.
+ * @param {String} listId - Id da lista.
  */
-async function deleteList(id) {
-    await ShoppingList.findByIdAndRemove(id)
+async function deleteList(listId) {
+    await ShoppingList.findByIdAndRemove(listId)
 }
 
 /**

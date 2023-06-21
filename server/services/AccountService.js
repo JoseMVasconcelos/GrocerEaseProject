@@ -8,7 +8,7 @@ const InvalidToken = require('../models/InvalidTokenModel');
 const bcrypt = require('bcryptjs');
 
 // Importando service de Autenticação.
-const { GenerateBearerToken } = require('../services/AuthService');
+const { generateBearerToken } = require('../services/AuthService');
 
 /**
  * Cria um novo usuário no sistema.
@@ -19,6 +19,7 @@ async function signUp(userCredentials) {
     const { name, email, password } = userCredentials;
 
     const userExists = await User.findOne({ email });
+    // Se o usuário já existir retorna Bad Request.
     if (userExists) {
         return badRequestResponse = {
             message: 'O usuário já existe no sistema.',
@@ -40,13 +41,11 @@ async function signUp(userCredentials) {
     // Salvando na base.
     await newUser.save();
 
-    const createdUser = {
+    return createdUser = {
         id: newUser._id,
         name: newUser.name,
         email: newUser.email
     };
-
-    return createdUser;
 }
 
 /**
@@ -69,7 +68,7 @@ async function login(userCredentials) {
         };
     }
 
-    const userToken = GenerateBearerToken(user);
+    const userToken = generateBearerToken(user);
 
     return userToken;
 }
@@ -105,7 +104,6 @@ async function patchUser(userId, updateData) {
     existingUser.name = name ? name : existingUser.name
     existingUser.email = email ? email : existingUser.email 
     if (password) {
-        // Criptografando senha.
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         existingUser.password = hashedPassword
@@ -114,9 +112,9 @@ async function patchUser(userId, updateData) {
     // Salvando na base.
     await existingUser.save();
 
-    return {
+    return userUpdated = {
         name: existingUser.name,
-        email: existingUser.email
+        email: existingUser.email,
     };
 }
 
