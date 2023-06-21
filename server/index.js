@@ -2,6 +2,9 @@
 const express = require('express');
 const app = express();
 
+// Importando o CORS.
+const cors = require('cors');
+
 // Importando Middleware de autenticação
 const TokenAuthenticator = require('./controllers/AuthMiddleware');
 
@@ -20,6 +23,9 @@ const shoppingListsRouter = require('./controllers/ShoppingListsController')
 mongoose.connect(database, {useUnifiedTopology: true, useNewUrlParser: true})
 .then(() => console.log('database connected'))
 .catch(error => console.log(error));
+
+// Utililzando o CORS.
+app.use(cors());
 
 // Utilizando o BodyParser.
 app.use(express.json())
