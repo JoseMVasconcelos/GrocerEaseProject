@@ -5,18 +5,18 @@ const app = express();
 // Importando o CORS.
 const cors = require('cors');
 
-// Importando Middleware de autenticação
+// Importando Middleware de autenticação.
 const TokenAuthenticator = require('./controllers/AuthMiddleware');
 
-// Importando mongoose e dotenv
+// Importando mongoose e dotenv.
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
 
-// Mongo Db Connection
+// Mongo Db Connection.
 const database = process.env.MONGOLAB_URI;
 
-// Importando rotas
+// Importando rotas.
 const userRouter = require('./controllers/AccountsController')
 const shoppingListsRouter = require('./controllers/ShoppingListsController')
 

@@ -7,10 +7,8 @@ const TokenAuthenticator = require('./AuthMiddleware');
 // Router do Express.
 const router = express.Router();
 
-// Importando métodos do AccountService.
+// Importando métodos do AccountService e modelos de validação.
 const { signUp, login, logout, patchUser } = require('../services/AccountService');
-
-// Importando Validações.
 const { signUpSchema, loginSchema } = require('../validations/AccountValidation');
 
 /**
@@ -21,7 +19,7 @@ const { signUpSchema, loginSchema } = require('../validations/AccountValidation'
 router.post('/signUp', async (req, res) => {
     try {
         const { error } = signUpSchema.validate(req.body);
-        if (error) return res.status(400).json({ exception:  error});
+        if (error) return res.status(400).json({ exception:  error.message });
 
         const signUpResult = await signUp(req.body);
         // Caso o usuário já exista no sistema retorna Bad Request.
@@ -42,7 +40,7 @@ router.post('/signUp', async (req, res) => {
 router.post('/login', async (req, res) => {
     try{
         const { error } = loginSchema.validate(req.body);
-        if (error) return res.status(400).json({ exception:  error });
+        if (error) return res.status(400).json({ exception:  error.message });
 
         const loginResult = await login(req.body);
         // Se o login der errado retorna Unauthorized.
@@ -57,6 +55,7 @@ router.post('/login', async (req, res) => {
 
 /**
  * Faz o logout do usuário no sistema.
+ * @param {Object} req - Requisição contendo o token do usuário.
  * @returns {String} - Mensagem de sucesso.
  */
 router.post('/logout', TokenAuthenticator, async (req, res) => {
@@ -71,7 +70,7 @@ router.post('/logout', TokenAuthenticator, async (req, res) => {
 
 /**
  * Atualiza campos do usuário.
- * @param {Object} req - Requisição contendo dados para atualizar o usuário.
+ * @param {Object} req - Requisição contendo o token do usuário e os dados necessários para aatualizar.
  * @returns {Object} - Mensagem de sucesso e objeto com o usuário atualizado.
  */
 router.patch('/users/', TokenAuthenticator, async (req, res) => {

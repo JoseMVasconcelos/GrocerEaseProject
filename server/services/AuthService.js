@@ -6,16 +6,17 @@ const jwt = require('jsonwebtoken');
  * @param {Object} user - Objeto User.
  * @returns {String} - Token de acesso.
  */
-function GenerateBearerToken(user) {
+function generateBearerToken(user) {
     const payload = {
         userId: user.id,
         username: user.name,
         email: user.email,
     };
 
+    // Gera o JWT.
     const token = jwt.sign(payload, process.env.TOKEN_SECRET_KEY, { expiresIn: '1h' });
 
     return token;
 }
 
-module.exports = { GenerateBearerToken };
+module.exports = generateBearerToken;
