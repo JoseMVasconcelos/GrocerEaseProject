@@ -43,5 +43,21 @@ router.post('/login', async (req, res) => {
     }
 });
 
+
+// Atualizacao do usuário
+router.patch('/users/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const updateData = req.body;
+        const patchResult = await accountService.PatchUser(userId, updateData);
+        if (patchResult && patchResult.status === 401){
+            return res.status(401).json({message: patchResult.message});
+        }
+        return res.status(201).json({ message: "Usuário atualizado com sucesso.", data: patchResult });
+    } catch (error) {
+        return res.status(500).json({exception: error });
+    }
+});
+
 // Exportando o router.
 module.exports = router;
