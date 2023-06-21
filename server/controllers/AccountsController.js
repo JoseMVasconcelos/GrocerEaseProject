@@ -1,11 +1,14 @@
 // Importando Express.
 const express = require('express');
 
+// Importando Middleware de autenticação.
+const TokenAuthenticator = require('./AuthMiddleware');
+
 // Router do Express.
 const router = express.Router();
 
 // Importando métodos do AccountService.
-const { signUp, login, patchUser } = require('../services/AccountService');
+const { signUp, login, logout, patchUser } = require('../services/AccountService');
 
 // Importando Validações.
 const { signUpSchema, loginSchema } = require('../validations/AccountValidation');
@@ -53,13 +56,27 @@ router.post('/login', async (req, res) => {
 });
 
 /**
+ * Faz o logout do usuário no sistema.
+ * @returns {String} - Mensagem de sucesso.
+ */
+router.post('/logout', TokenAuthenticator, async (req, res) => {
+    try{
+        const userToken = req.userData;
+        await logout(userToken);
+        res.status(200).json({ message: "Logout realizado com sucesso.", message: "Token Invalidado"});
+    } catch (error){
+        return res.status(500).json({ exception: error.message });
+    }
+});
+
+/**
  * Atualiza campos do usuário.
  * @param {Object} req - Requisição contendo dados para atualizar o usuário.
  * @returns {Object} - Mensagem de sucesso e objeto com o usuário atualizado.
  */
-router.patch('/users/:id', async (req, res) => {
+router.patch('/users/', TokenAuthenticator, async (req, res) => {
     try {
-        const userId = req.params.id;
+        const userId = req.userData.userId;
         const updateData = req.body;
         const patchResult = await patchUser(userId, updateData);
         if (patchResult && patchResult.status === 401){
