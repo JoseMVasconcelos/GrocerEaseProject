@@ -5,14 +5,14 @@ const User = require('../models/UserModel');
 const bcrypt = require('bcryptjs');
 
 // Importando service de Autenticação.
-const authService = require('../services/AuthService');
+const { GenerateBearerToken } = require('../services/AuthService');
 
 /**
  * Cria um novo usuário no sistema.
  * @param {Object} userCredentials - Credenciais do usuário: nome, email, senha e confirmação de senha.
  * @returns {Object} - Objeto contendo Id, nome e email do usuário cadastrado.
  */
-async function SignUp(userCredentials) {
+async function signUp(userCredentials) {
     const { name, email, password } = userCredentials;
 
     const userExists = await User.findOne({ email });
@@ -51,7 +51,7 @@ async function SignUp(userCredentials) {
  * @param {Object} userCredentials - Credenciais do usuário: email e senha.
  * @returns {String} - Token de acesso.
  */
-async function Login(userCredentials) {
+async function login(userCredentials) {
     const { email, password } = userCredentials;
 
     const user = await User.findOne({ email });
@@ -66,12 +66,12 @@ async function Login(userCredentials) {
         };
     }
 
-    const userToken = authService.GenerateBearerToken(user);
+    const userToken = GenerateBearerToken(user);
 
     return userToken;
 }
 
 module.exports = { 
-    SignUp,
-    Login,
+    signUp,
+    login,
 };

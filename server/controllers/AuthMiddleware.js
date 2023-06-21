@@ -30,3 +30,5 @@ function TokenAuthentication(req, res, next) {
         next();
     });
 }
+
+module.exports = TokenAuthentication;

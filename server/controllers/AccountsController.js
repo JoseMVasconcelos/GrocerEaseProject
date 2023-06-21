@@ -4,8 +4,8 @@ const express = require('express');
 // Router do Express.
 const router = express.Router();
 
-// Importando AccountService.
-const accountService = require('../services/AccountService');
+// Importando métodos do AccountService.
+const { signUp, login } = require('../services/AccountService');
 
 // Importando Validações.
 const { signUpSchema, loginSchema } = require('../validations/AccountValidation');
@@ -18,17 +18,16 @@ const { signUpSchema, loginSchema } = require('../validations/AccountValidation'
 router.post('/signUp', async (req, res) => {
     try {
         const { error } = signUpSchema.validate(req.body);
-        // Caso haja um erro na validação dos parâmetros retorna Bad Request.
-        if (error) return res.status(400).json({exception:  error});
+        if (error) return res.status(400).json({ exception:  error});
 
-        const signUpResult = await accountService.SignUp(req.body);
+        const signUpResult = await signUp(req.body);
         // Caso o usuário já exista no sistema retorna Bad Request.
         if (signUpResult && signUpResult.status === 400){
-            return res.status(400).json({message: signUpResult.message})
+            return res.status(400).json({ message: signUpResult.message })
         }
-        return res.status(201).json({message: "Usuário cadastrado com sucesso.", data: signUpResult });
+        return res.status(201).json({ message: "Usuário cadastrado com sucesso.", data: signUpResult });
     } catch (error) {
-        return res.status(500).json({exception: error.message});
+        return res.status(500).json({ exception: error.message });
     }
 });
 
@@ -40,17 +39,16 @@ router.post('/signUp', async (req, res) => {
 router.post('/login', async (req, res) => {
     try{
         const { error } = loginSchema.validate(req.body);
-        // Caso haja um erro na validação dos parâmetros retorna Bad Request.
-        if (error) return res.status(400).json({exception:  error});
+        if (error) return res.status(400).json({ exception:  error });
 
-        const loginResult = await accountService.Login(req.body);
+        const loginResult = await login(req.body);
         // Se o login der errado retorna Unauthorized.
         if (loginResult && loginResult.status === 401){
-            return res.status(401).json({message: loginResult.message});
+            return res.status(401).json({ message: loginResult.message });
         }
-        return res.status(200).json({token: loginResult});
+        return res.status(200).json({ token: loginResult });
     } catch (error){
-        return res.status(500).json({exception: error });
+        return res.status(500).json({ exception: error });
     }
 });
 
