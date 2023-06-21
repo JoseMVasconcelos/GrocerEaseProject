@@ -19,18 +19,16 @@ router.post('/signUp', async (req, res) => {
     try {
         const { error } = signUpSchema.validate(req.body);
         // Caso haja um erro na validação dos parâmetros retorna Bad Request.
-        if (error) {
-            return res.status(400).json({exception:  error});
-        }
+        if (error) return res.status(400).json({exception:  error});
 
         const signUpResult = await accountService.SignUp(req.body);
         // Caso o usuário já exista no sistema retorna Bad Request.
         if (signUpResult && signUpResult.status === 400){
             return res.status(400).json({message: signUpResult.message})
         }
-        return res.status(201).json({message: "Usuário cadastrado com sucesso.", data: result });
+        return res.status(201).json({message: "Usuário cadastrado com sucesso.", data: signUpResult });
     } catch (error) {
-        return res.status(500).json({exception: error});
+        return res.status(500).json({exception: error.message});
     }
 });
 
@@ -43,9 +41,7 @@ router.post('/login', async (req, res) => {
     try{
         const { error } = loginSchema.validate(req.body);
         // Caso haja um erro na validação dos parâmetros retorna Bad Request.
-        if (error) {
-            return res.status(400).json({exception:  error});
-        }
+        if (error) return res.status(400).json({exception:  error});
 
         const loginResult = await accountService.Login(req.body);
         // Se o login der errado retorna Unauthorized.

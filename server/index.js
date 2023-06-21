@@ -10,16 +10,17 @@ dotenv.config();
 // Mongo Db Connection
 const database = process.env.MONGOLAB_URI;
 
-// Rotas
-const userRouter = require('./controllers/AccountController')
+// Importando rotas
+const userRouter = require('./controllers/AccountsController')
 const shoppingListsRouter = require('./controllers/ShoppingListsController')
 
 mongoose.connect(database, {useUnifiedTopology: true, useNewUrlParser: true})
-    .then(() => console.log('database connected'))
-    .catch(error => console.log(error));
+.then(() => console.log('database connected'))
+.catch(error => console.log(error));
 
+// Utilizando o BodyParser.
 app.use(express.json())
-// Importando rotas para requisições ligadas ao login.
+
 app.use('/', userRouter);
 app.use('/shoppingLists', shoppingListsRouter);
 
