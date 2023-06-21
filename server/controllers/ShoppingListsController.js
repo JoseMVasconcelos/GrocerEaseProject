@@ -15,7 +15,7 @@ router.get('/:ownerId', async (req, res) => {
         const shoppingLists = await getAllLists(ownerId)
         return res.status(400).json(shoppingLists)
     } catch (error) {
-        return res.status(500).json({ exception: error });
+        return res.status(500).json({ exception: error.message });
     }
 })
 
@@ -34,7 +34,7 @@ router.post('/:ownerId', async (req, res) => {
         const shoppingList = await createNewList(ownerId, req.body)
         return res.status(201).json({ message: "Lista criada com sucesso", data: shoppingList });
     } catch (error) {
-        return res.status(500).json({ exception: error });
+        return res.status(500).json({ exception: error.message });
     }
 })
 
@@ -53,7 +53,7 @@ router.put('/:listId', async (req, res) => {
         await updateList(listId, req.body)
         return res.status(200).json({ message: "Lista atualizada com sucesso" });
     } catch (error) {
-        return res.status(500).json({ exception: error });
+        return res.status(500).json({ exception: error.message });
     }
 })
 
@@ -68,7 +68,7 @@ router.delete('/:listId', async (req, res) => {
         await deleteList(listId)
         return res.status(204).json({ message: "Lista deletada com sucesso!" });
     } catch (error) {
-        return res.status(500).json({ exception: error });
+        return res.status(500).json({ exception: error.message });
     }
 })
 
@@ -86,7 +86,7 @@ router.post('/share/:listId', async (req, res) => {
         await shareList(listId, req.body.newOwnerId)
         return res.status(200).json({ message: "Lista compartilhada com sucesso!" });
     } catch (error) {
-        return res.status(500).json({ exception: error });
+        return res.status(500).json({ exception: error.message });
     }
 })
 
