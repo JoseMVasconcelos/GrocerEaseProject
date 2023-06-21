@@ -4,15 +4,23 @@ const User = require('../models/UserModel');
 // Importando middleware para criptografia de senha.
 const bcrypt = require('bcryptjs');
 
-const authService = require('../services/AuthService');
+// Importando service de Autenticação.
+const { GenerateBearerToken } = require('../services/AuthService');
 
-// Cadastro.
-async function SignUp(userCredentials) {
+/**
+ * Cria um novo usuário no sistema.
+ * @param {Object} userCredentials - Credenciais do usuário: nome, email, senha e confirmação de senha.
+ * @returns {Object} - Objeto contendo Id, nome e email do usuário cadastrado.
+ */
+async function signUp(userCredentials) {
     const { name, email, password } = userCredentials;
 
     const userExists = await User.findOne({ email });
     if (userExists) {
-        throw new Error('O usuário já existe.');
+        return badRequestResponse = {
+            message: 'O usuário já existe no sistema.',
+            status: 400
+        };
     }
 
     // Criptografando senha.
@@ -30,6 +38,7 @@ async function SignUp(userCredentials) {
     await newUser.save();
 
     const createdUser = {
+        id: newUser._id,
         name: newUser.name,
         email: newUser.email
     };
@@ -37,34 +46,38 @@ async function SignUp(userCredentials) {
     return createdUser;
 }
 
-async function Login(userCredentials) {
+/**
+ * Faz o login do usuário no sistema.
+ * @param {Object} userCredentials - Credenciais do usuário: email e senha.
+ * @returns {String} - Token de acesso.
+ */
+async function login(userCredentials) {
     const { email, password } = userCredentials;
 
     const user = await User.findOne({ email });
 
     const passwordIsCorrect = bcrypt.compareSync(password, user.password);
 
-    // Se o usuário não existir, ou se a senha estiver incorreta, retornará nulo.
+    // Se o usuário não existir, ou se a senha estiver incorreta, retornará Unauthorized.
     if (!user || !passwordIsCorrect) {
-        const unauthorizedResponse = {
-            message: 'Credenciais inválidas',
+        return unauthorizedResponse = {
+            message: 'Credenciais inválidas ou usuário inexistente.',
             status: 401
         };
-        return unauthorizedResponse
     }
 
-    const userToken = authService.GenerateBearerToken(user);
+    const userToken = GenerateBearerToken(user);
 
     return userToken;
 }
 
 /**
  * Atualiza o cadastro do usuário já existente
- * @param {String} userId - id do usuário que será atualizado
- * @param {Object} updateData - atributos do usuário: name, email, password
- * @returns {Object} - atributos do usuário: name, email
+ * @param {String} userId - Id do usuário que será atualizado.
+ * @param {Object} updateData - Atributos do usuário: name, email, password.
+ * @returns {Object} - Atributos do usuário: name, email.
  */
-async function PatchUser(userId, updateData) {
+async function patchUser(userId, updateData) {
     const { name, email, password } = updateData;
 
     const existingUser = await User.findById(userId);
@@ -96,7 +109,7 @@ async function PatchUser(userId, updateData) {
 }
 
 module.exports = { 
-    SignUp,
-    Login,
-    PatchUser,
+    signUp,
+    login,
+    patchUser,
 };

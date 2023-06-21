@@ -4,47 +4,65 @@ const express = require('express');
 // Router do Express.
 const router = express.Router();
 
-// Importando UserService.
+// Importando AccountService.
 const accountService = require('../services/AccountService');
 
 // Importando Validações.
 const { signUpSchema, loginSchema } = require('../validations/AccountValidation');
 
-// Cadastro do usuário
+/**
+ * Cria um novo usuário no sistema.
+ * @param {Object} req - Requisição contendo nome, email, senha e senha confirmada do usuário.
+ * @returns {Object} - JSON contendo a mensagem de sucesso e os dados do usuário cadastrado.
+ */
 router.post('/signUp', async (req, res) => {
     try {
-        const { validationError } = signUpSchema.validate(req.body);
-        if (!validationError) {
-            const result = await accountService.SignUp(req.body);
-            return res.status(201).json({ message: "Usuário cadastrado com sucesso.", data: result });
+        const { error } = signUpSchema.validate(req.body);
+        // Caso haja um erro na validação dos parâmetros retorna Bad Request.
+        if (error) {
+            return res.status(400).json({exception:  error});
         }
-        return res.status(400).json({exception:  validationError });
+
+        const signUpResult = await accountService.SignUp(req.body);
+        // Caso o usuário já exista no sistema retorna Bad Request.
+        if (signUpResult && signUpResult.status === 400){
+            return res.status(400).json({message: signUpResult.message})
+        }
+        return res.status(201).json({message: "Usuário cadastrado com sucesso.", data: result });
     } catch (error) {
-        return res.status(500).json({exception: error });
+        return res.status(500).json({exception: error});
     }
 });
 
+/**
+ * Faz o login do usuário no sistema.
+ * @param {Object} req - Requisição contendo email e senha do usuário.
+ * @returns {Object} - JSON contendo um token de acesso.
+ */
 router.post('/login', async (req, res) => {
     try{
-        const { validationError } = loginSchema.validate(req.body);
-        if (!validationError) {
-            const loginResult = await accountService.Login(req.body);
-
-            if (loginResult && loginResult.status === 401){
-                return res.status(401).json({message: loginResult.message});
-            }
-
-            return res.status(200).json({token: loginResult});
+        const { error } = loginSchema.validate(req.body);
+        // Caso haja um erro na validação dos parâmetros retorna Bad Request.
+        if (error) {
+            return res.status(400).json({exception:  error});
         }
 
-        return res.status(400).json({exception:  validationError });
+        const loginResult = await accountService.Login(req.body);
+        // Se o login der errado retorna Unauthorized.
+        if (loginResult && loginResult.status === 401){
+            return res.status(401).json({message: loginResult.message});
+        }
+        return res.status(200).json({token: loginResult});
     } catch (error){
         return res.status(500).json({exception: error });
     }
 });
 
-
-// Atualizacao do usuário
+/**
+ * Atualiza campos do usuário.
+ * @param {Object} req - Requisição contendo dados para atualizar o usuário.
+ * @returns {Object} - Mensagem de sucesso e objeto com o usuário atualizado.
+ */
 router.patch('/users/:id', async (req, res) => {
     try {
         const userId = req.params.id;
