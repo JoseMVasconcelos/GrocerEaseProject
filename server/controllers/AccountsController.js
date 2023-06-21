@@ -48,7 +48,7 @@ router.post('/login', async (req, res) => {
         }
         return res.status(200).json({ token: loginResult });
     } catch (error){
-        return res.status(500).json({ exception: error });
+        return res.status(500).json({ exception: error.message });
     }
 });
 
@@ -67,7 +67,7 @@ router.patch('/users/:id', async (req, res) => {
         }
         return res.status(201).json({ message: "Usuário atualizado com sucesso.", data: patchResult });
     } catch (error) {
-        return res.status(500).json({exception: error });
+        return res.status(500).json({exception: error.message });
     }
 });
 
