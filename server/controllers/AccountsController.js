@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 // Importando métodos do AccountService.
-const { signUp, login } = require('../services/AccountService');
+const { signUp, login, patchUser } = require('../services/AccountService');
 
 // Importando Validações.
 const { signUpSchema, loginSchema } = require('../validations/AccountValidation');
@@ -49,6 +49,25 @@ router.post('/login', async (req, res) => {
         return res.status(200).json({ token: loginResult });
     } catch (error){
         return res.status(500).json({ exception: error });
+    }
+});
+
+/**
+ * Atualiza campos do usuário.
+ * @param {Object} req - Requisição contendo dados para atualizar o usuário.
+ * @returns {Object} - Mensagem de sucesso e objeto com o usuário atualizado.
+ */
+router.patch('/users/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const updateData = req.body;
+        const patchResult = await patchUser(userId, updateData);
+        if (patchResult && patchResult.status === 401){
+            return res.status(401).json({message: patchResult.message});
+        }
+        return res.status(201).json({ message: "Usuário atualizado com sucesso.", data: patchResult });
+    } catch (error) {
+        return res.status(500).json({exception: error });
     }
 });
 
