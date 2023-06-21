@@ -1,5 +1,6 @@
 const joi = require('joi');
 
+// Esquemas de validação para a lista de compras.
 const createNewListSchema = joi.object({
     name: joi.string().required(),
     description: joi.string().required(),
