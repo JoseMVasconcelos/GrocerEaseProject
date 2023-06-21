@@ -58,20 +58,33 @@ async function Login(userCredentials) {
     return userToken;
 }
 
-// Atualizacao.
-async function Update(userId, updateData) {
+/**
+ * Atualiza o cadastro do usuário já existente
+ * @param {String} userId - id do usuário que será atualizado
+ * @param {Object} updateData - atributos do usuário: name, email, password
+ * @returns {Object} - atributos do usuário: name, email
+ */
+async function PatchUser(userId, updateData) {
     const { name, email, password } = updateData;
 
     const existingUser = await User.findById(userId);
 
-    // Criptografando senha.
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    if (!existingUser) {
+        return { 
+            message: 'ID de usuário não encontrado no banco de dados', 
+            status: 401
+        };
+    }
 
     // Atualizando usuario
-    existingUser.name = name
-    existingUser.email = email
-    existingUser.password = hashedPassword
+    existingUser.name = name ? name : existingUser.name
+    existingUser.email = email ? email : existingUser.email 
+    if (password) {
+        // Criptografando senha.
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        existingUser.password = hashedPassword
+    }
 
     // Salvando na base.
     await existingUser.save();
@@ -85,5 +98,5 @@ async function Update(userId, updateData) {
 module.exports = { 
     SignUp,
     Login,
-    Update,
+    PatchUser,
 };

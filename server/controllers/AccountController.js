@@ -45,12 +45,15 @@ router.post('/login', async (req, res) => {
 
 
 // Atualizacao do usuário
-router.put('/users/:id', async (req, res) => {
+router.patch('/users/:id', async (req, res) => {
     try {
         const userId = req.params.id;
         const updateData = req.body;
-        const result = await accountService.Update(userId, updateData);
-        return res.status(201).json({ message: "Usuário atualizado com sucesso.", data: result });
+        const patchResult = await accountService.PatchUser(userId, updateData);
+        if (patchResult && patchResult.status === 401){
+            return res.status(401).json({message: patchResult.message});
+        }
+        return res.status(201).json({ message: "Usuário atualizado com sucesso.", data: patchResult });
     } catch (error) {
         return res.status(500).json({exception: error });
     }
