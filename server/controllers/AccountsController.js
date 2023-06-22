@@ -9,7 +9,7 @@ const router = express.Router();
 
 // Importando métodos do AccountService e modelos de validação.
 const { signUp, login, logout, patchUser } = require('../services/AccountService');
-const { signUpSchema, loginSchema } = require('../validations/AccountValidation');
+const { signUpSchema, loginSchema, patchSchema } = require('../validations/AccountValidation');
 
 /**
  * Cria um novo usuário no sistema.
