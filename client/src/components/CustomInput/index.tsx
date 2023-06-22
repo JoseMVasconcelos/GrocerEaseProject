@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import styles from './CustomInput.module.css'
 
 interface CustomInputProps {
@@ -6,17 +7,17 @@ interface CustomInputProps {
   placeholder?: string
 }
 
-export function CustomInput({
-  inputType,
-  isRequired,
-  placeholder,
-}: CustomInputProps) {
-  return (
-    <input
-      type={inputType}
-      required={isRequired}
-      placeholder={placeholder}
-      className={styles.customInput}
-    />
-  )
-}
+export const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
+  function CustomInput({ inputType, isRequired, placeholder, ...props }, ref) {
+    return (
+      <input
+        {...props}
+        ref={ref}
+        type={inputType}
+        required={isRequired}
+        placeholder={placeholder}
+        className={styles.customInput}
+      />
+    )
+  },
+)
