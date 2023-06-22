@@ -41,11 +41,13 @@ async function signUp(userCredentials) {
     // Salvando na base.
     await newUser.save();
 
-    return createdUser = {
+    const createdUser = {
         id: newUser._id,
-        name: newUser.name,
+        username: newUser.name,
         email: newUser.email
     };
+
+    return generateBearerToken(createdUser)
 }
 
 /**
