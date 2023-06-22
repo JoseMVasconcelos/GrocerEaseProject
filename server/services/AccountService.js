@@ -8,7 +8,7 @@ const InvalidToken = require('../models/InvalidTokenModel');
 const bcrypt = require('bcryptjs');
 
 // Importando service de Autenticação.
-const { generateBearerToken } = require('../services/AuthService');
+const generateBearerToken = require('../services/AuthService');
 
 /**
  * Cria um novo usuário no sistema.
