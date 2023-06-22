@@ -9,7 +9,7 @@ const router = express.Router();
 
 // Importando métodos do AccountService e modelos de validação.
 const { signUp, login, logout, patchUser } = require('../services/AccountService');
-const { signUpSchema, loginSchema } = require('../validations/AccountValidation');
+const { signUpSchema, loginSchema, patchSchema } = require('../validations/AccountValidation');
 
 /**
  * Cria um novo usuário no sistema.
@@ -77,6 +77,10 @@ router.patch('/users/', TokenAuthenticator, async (req, res) => {
     try {
         const userId = req.userData.userId;
         const updateData = req.body;
+
+        const { error } = patchSchema.validate(updateData);
+        if (error) return res.status(400).json({ exception:  error});
+
         const patchResult = await patchUser(userId, updateData);
         if (patchResult && patchResult.status === 401){
             return res.status(401).json({message: patchResult.message});
