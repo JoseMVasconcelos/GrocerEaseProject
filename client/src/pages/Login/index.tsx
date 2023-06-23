@@ -15,7 +15,7 @@ const loginFormSchema = zod.object({
 
 type LoginFormSchema = zod.infer<typeof loginFormSchema>
 
-export function SignIn() {
+export function Login() {
   const {
     handleSubmit,
     register,
