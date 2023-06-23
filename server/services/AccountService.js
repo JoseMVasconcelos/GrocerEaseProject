@@ -43,7 +43,7 @@ async function signUp(userCredentials) {
 
     const createdUser = {
         id: newUser._id,
-        username: newUser.name,
+        name: newUser.name,
         email: newUser.email
     };
 
@@ -79,8 +79,8 @@ async function login(userCredentials) {
  * Faz o logout do usuário no sistema.
  * @param {String} userToken - Token do usuário.
  */
-async function logout(userToken) {
-    const logoutResult = new InvalidToken(userToken);
+async function logout(token) {
+    const logoutResult = new InvalidToken({ token });
     await logoutResult.save();
 }
 
@@ -114,10 +114,9 @@ async function patchUser(userId, updateData) {
     // Salvando na base.
     await existingUser.save();
 
-    return userUpdated = {
-        name: existingUser.name,
-        email: existingUser.email,
-    };
+    const newUserToken = generateBearerToken(existingUser)
+
+    return newUserToken
 }
 
 module.exports = { 

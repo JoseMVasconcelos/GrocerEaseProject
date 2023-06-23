@@ -11,6 +11,9 @@ import { ListItem } from './components/ListItem'
 import { CustomButton } from '../../components/CustomButton'
 import { CustomInput } from '../../components/CustomInput'
 import { WarningCircle } from '@phosphor-icons/react'
+import { useContext, useEffect } from 'react'
+import { AuthContext } from '../../contexts/AuthContext/AuthContext'
+import { useNavigate } from 'react-router'
 
 const newProductFormSchema = zod.object({
   productName: zod.string().min(1, 'Informe o nome do novo produto'),
@@ -19,6 +22,9 @@ const newProductFormSchema = zod.object({
 type NewProductFormSchema = zod.infer<typeof newProductFormSchema>
 
 export function ListDetails() {
+  const { isAuthenticated, isLoading } = useContext(AuthContext)
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -27,11 +33,25 @@ export function ListDetails() {
     resolver: zodResolver(newProductFormSchema),
   })
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login')
+    }
+  }, [isAuthenticated, navigate])
+
   function handleAddNewProduct(newProductData: NewProductFormSchema) {
     console.log(newProductData)
   }
 
   const errorMessages = getFormErrors<NewProductFormSchema>(errors)
+
+  if (!isAuthenticated) {
+    return <></>
+  }
+
+  if (isLoading) {
+    return <h1>loading...</h1>
+  }
 
   return (
     <div className={styles.pageContainer}>

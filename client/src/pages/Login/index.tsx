@@ -1,6 +1,5 @@
 import styles from './../SignUp/SignUp.module.css'
 
-import { api } from '../../lib/axios'
 import { getFormErrors } from '../../utils/getFormErrors'
 
 import * as zod from 'zod'
@@ -10,6 +9,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { CustomButton } from '../../components/CustomButton'
 import { CustomInput } from '../../components/CustomInput'
 import { WarningCircle } from '@phosphor-icons/react'
+import { useContext } from 'react'
+import { AuthContext } from '../../contexts/AuthContext/AuthContext'
 
 const loginFormSchema = zod.object({
   email: zod.string().email('Informe um email válido'),
@@ -19,6 +20,8 @@ const loginFormSchema = zod.object({
 type LoginFormSchema = zod.infer<typeof loginFormSchema>
 
 export function Login() {
+  const { handleLogin } = useContext(AuthContext)
+
   const {
     handleSubmit,
     register,
@@ -27,9 +30,8 @@ export function Login() {
     resolver: zodResolver(loginFormSchema),
   })
 
-  async function handleLogin(loginData: LoginFormSchema) {
-    const res = await api.post('/login', loginData)
-    console.log(res)
+  async function onLogin(loginData: LoginFormSchema) {
+    await handleLogin(loginData)
   }
 
   const errorMessages = getFormErrors<LoginFormSchema>(errors)
@@ -49,10 +51,7 @@ export function Login() {
           })}
         </div>
       )}
-      <form
-        className={styles.formContainer}
-        onSubmit={handleSubmit(handleLogin)}
-      >
+      <form className={styles.formContainer} onSubmit={handleSubmit(onLogin)}>
         <CustomInput
           inputType="email"
           placeholder="Email"

@@ -10,6 +10,7 @@ import { getFormErrors } from '../../utils/getFormErrors'
 import { CustomButton } from '../CustomButton'
 import { CustomInput } from '../CustomInput'
 import { WarningCircle, X } from '@phosphor-icons/react'
+import { useAuthContext } from '../../hooks/useAuthContext'
 
 const editUserDataFormSchema = zod.object({
   email: zod.string().email('Informe um email válido'),
@@ -22,6 +23,7 @@ const editUserDataFormSchema = zod.object({
 type EditUserDataFormSchema = zod.infer<typeof editUserDataFormSchema>
 
 export function EditUserDataModal() {
+  const { handleEditUserData } = useAuthContext()
   const {
     register,
     handleSubmit,
@@ -30,8 +32,8 @@ export function EditUserDataModal() {
     resolver: zodResolver(editUserDataFormSchema),
   })
 
-  function handleEditarUserData(newUserData: EditUserDataFormSchema) {
-    console.log(newUserData)
+  async function onEditUserData(newUserData: EditUserDataFormSchema) {
+    await handleEditUserData(newUserData)
   }
 
   const errorMessages = getFormErrors<EditUserDataFormSchema>(errors)
@@ -58,7 +60,7 @@ export function EditUserDataModal() {
               })}
             </div>
           )}
-          <form onSubmit={handleSubmit(handleEditarUserData)}>
+          <form onSubmit={handleSubmit(onEditUserData)}>
             <CustomInput
               inputType="email"
               placeholder="Email"

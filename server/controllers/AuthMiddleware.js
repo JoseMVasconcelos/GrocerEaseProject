@@ -25,7 +25,11 @@ function TokenAuthenticator(req, res, next) {
 
         // O payload quando decodificado será armazenado no req.userData,
         // E poderá ser acessado em qualquer outra rota protegida.
-        req.userData = decoded;
+  
+        req.userData = {
+            ...decoded,
+            token
+        };
 
         next();
     });
