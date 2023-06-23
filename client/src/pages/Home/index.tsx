@@ -12,10 +12,10 @@ export function Home() {
       </div>
       <div className={styles.buttons}>
         <CustomButton fullWidth>
-          <Link to={'sign-up'}>Cadastro</Link>
+          <Link to={'/sign-up'}>Cadastro</Link>
         </CustomButton>
         <CustomButton fullWidth>
-          <Link to={'sign-in'}>Login</Link>
+          <Link to={'/login'}>Login</Link>
         </CustomButton>
       </div>
     </section>

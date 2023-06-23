@@ -21,6 +21,22 @@
   padding: 2.5rem;
 }
 
+.error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.error > h2 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: var(--warning);
+}
+
+.error > svg {
+  color: var(--warning);
+}
+
 @media screen and (max-width: 32rem) {
   .pageContainer h1 {
     font-size: 1.5rem;
