@@ -1,11 +1,36 @@
 import styles from './NewListModal.module.css'
 import * as Dialog from '@radix-ui/react-dialog'
-import { X } from '@phosphor-icons/react'
+import { WarningCircle, X } from '@phosphor-icons/react'
 
 import { CustomInput } from '../../../../components/CustomInput'
 import { CustomButton } from '../../../../components/CustomButton'
+import { useForm } from 'react-hook-form'
+import * as zod from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { getFormErrors } from '../../../../utils/getFormErrors'
+
+const newListFormSchema = zod.object({
+  name: zod.string().min(1, 'Informe um nome para a nova lista'),
+  description: zod.string().min(1, 'Informe uma descrição'),
+})
+
+type NewListFormSchema = zod.infer<typeof newListFormSchema>
 
 export function NewListModal() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NewListFormSchema>({
+    resolver: zodResolver(newListFormSchema),
+  })
+
+  function handleCreateNewList(newListData: NewListFormSchema) {
+    console.log(newListData)
+  }
+
+  const errorMessages = getFormErrors(errors)
+
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -23,12 +48,30 @@ export function NewListModal() {
             <Dialog.Description className={styles.dialogDescription}>
               Adicione um nome e descrição para criar a sua nova lista.
             </Dialog.Description>
-            <form>
-              <CustomInput inputType="text" placeholder="Nome" isRequired />
+            {!!errorMessages && (
+              <div>
+                {errorMessages.map((error) => {
+                  return (
+                    <div className={styles.error} key={error}>
+                      <WarningCircle />
+                      <h3>{error}</h3>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+            <form onSubmit={handleSubmit(handleCreateNewList)}>
+              <CustomInput
+                inputType="text"
+                placeholder="Nome"
+                isRequired={false}
+                {...register('name')}
+              />
               <CustomInput
                 inputType="text"
                 placeholder="Descrição"
-                isRequired
+                isRequired={false}
+                {...register('description')}
               />
               <CustomButton fullWidth>criar lista</CustomButton>
             </form>

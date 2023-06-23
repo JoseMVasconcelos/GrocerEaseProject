@@ -5,17 +5,25 @@ import styles from './SignUp.module.css'
 import { useForm } from 'react-hook-form'
 import * as zod from 'zod'
 import { api } from '../../lib/axios'
+import { WarningCircle } from '@phosphor-icons/react'
+import { getFormErrors } from '../../utils/getFormErrors'
 
 const signUpFormSchema = zod.object({
-  email: zod.string().email(),
-  name: zod.string().min(1, 'Informe o seu nome'),
-  password: zod.string().min(1, 'Informe a sua senha'),
+  email: zod.string().email('Informe um email válido'),
+  name: zod
+    .string()
+    .regex(/^\s*\w+(?:[^\w,]+\w+)*[^,\w]*$/, 'Informe um nome válido'),
+  password: zod.string().min(6, 'Informe uma senha com no mínimo 6 caracteres'),
 })
 
 type SignUpFormSchema = zod.infer<typeof signUpFormSchema>
 
 export function SignUp() {
-  const { handleSubmit, register } = useForm<SignUpFormSchema>({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<SignUpFormSchema>({
     resolver: zodResolver(signUpFormSchema),
   })
 
@@ -27,9 +35,23 @@ export function SignUp() {
     console.log(res)
   }
 
+  const errorMessages = getFormErrors(errors)
+
   return (
     <section className={styles.pageContainer}>
       <h1>Realize o seu cadastro!</h1>
+      {!!errorMessages && (
+        <div>
+          {errorMessages.map((error) => {
+            return (
+              <div className={styles.error} key={error}>
+                <WarningCircle />
+                <h2>{error}</h2>
+              </div>
+            )
+          })}
+        </div>
+      )}
       <form
         className={styles.formContainer}
         onSubmit={handleSubmit(handleSignUp)}

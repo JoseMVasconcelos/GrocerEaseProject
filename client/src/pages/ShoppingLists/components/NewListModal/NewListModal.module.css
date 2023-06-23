@@ -65,6 +65,23 @@
   margin: 0.5rem 0 1rem;
 }
 
+.error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.error > h3 {
+  font-size: 1rem;
+  color: var(--warning);
+  text-transform: uppercase;
+}
+
+.error > svg {
+  color: var(--warning);
+}
+
 @media screen and (max-width: 32rem) {
   .dialogTitle {
     font-size: 1.25rem;
@@ -82,5 +99,11 @@
   .closeButton > svg {
     width: 1rem;
     height: 1rem;
+  }
+
+  .error > h3 {
+    font-size: 0.75rem;
+    color: var(--warning);
+    text-transform: uppercase;
   }
 }
