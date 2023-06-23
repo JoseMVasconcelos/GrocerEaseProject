@@ -1,12 +1,15 @@
 import styles from './EditUserDataModal.module.css'
+
+import * as zod from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+
 import * as Dialog from '@radix-ui/react-dialog'
-import { WarningCircle, X } from '@phosphor-icons/react'
+import { getFormErrors } from '../../utils/getFormErrors'
+
 import { CustomButton } from '../CustomButton'
 import { CustomInput } from '../CustomInput'
-import { useForm } from 'react-hook-form'
-import * as zod from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { getFormErrors } from '../../utils/getFormErrors'
+import { WarningCircle, X } from '@phosphor-icons/react'
 
 const editUserDataFormSchema = zod.object({
   email: zod.string().email('Informe um email válido'),
@@ -31,7 +34,7 @@ export function EditUserDataModal() {
     console.log(newUserData)
   }
 
-  const errorMessages = getFormErrors(errors)
+  const errorMessages = getFormErrors<EditUserDataFormSchema>(errors)
 
   return (
     <Dialog.Portal>

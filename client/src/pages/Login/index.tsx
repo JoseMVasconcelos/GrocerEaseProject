@@ -1,11 +1,14 @@
-import { CustomButton } from '../../components/CustomButton'
-import { CustomInput } from '../../components/CustomInput'
 import styles from './../SignUp/SignUp.module.css'
+
+import { api } from '../../lib/axios'
+import { getFormErrors } from '../../utils/getFormErrors'
+
 import * as zod from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { api } from '../../lib/axios'
-import { getFormErrors } from '../../utils/getFormErrors'
+
+import { CustomButton } from '../../components/CustomButton'
+import { CustomInput } from '../../components/CustomInput'
 import { WarningCircle } from '@phosphor-icons/react'
 
 const loginFormSchema = zod.object({
@@ -29,7 +32,7 @@ export function Login() {
     console.log(res)
   }
 
-  const errorMessages = getFormErrors(errors)
+  const errorMessages = getFormErrors<LoginFormSchema>(errors)
 
   return (
     <section className={styles.pageContainer}>

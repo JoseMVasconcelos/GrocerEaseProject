@@ -1,13 +1,15 @@
 import styles from './NewListModal.module.css'
+
+import * as zod from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+
 import * as Dialog from '@radix-ui/react-dialog'
-import { WarningCircle, X } from '@phosphor-icons/react'
+import { getFormErrors } from '../../../../utils/getFormErrors'
 
 import { CustomInput } from '../../../../components/CustomInput'
 import { CustomButton } from '../../../../components/CustomButton'
-import { useForm } from 'react-hook-form'
-import * as zod from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { getFormErrors } from '../../../../utils/getFormErrors'
+import { WarningCircle, X } from '@phosphor-icons/react'
 
 const newListFormSchema = zod.object({
   name: zod.string().min(1, 'Informe um nome para a nova lista'),
@@ -29,7 +31,7 @@ export function NewListModal() {
     console.log(newListData)
   }
 
-  const errorMessages = getFormErrors(errors)
+  const errorMessages = getFormErrors<NewListFormSchema>(errors)
 
   return (
     <Dialog.Root>

@@ -1,12 +1,15 @@
+import styles from './ListDetails.module.css'
+
+import { getFormErrors } from '../../utils/getFormErrors'
+import { mockListItems } from './mockListItems'
+
+import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+
+import { ListItem } from './components/ListItem'
 import { CustomButton } from '../../components/CustomButton'
 import { CustomInput } from '../../components/CustomInput'
-import { ListItem } from './components/ListItem'
-import styles from './ListDetails.module.css'
-import { mockListItems } from './mockListItems'
-import { useForm } from 'react-hook-form'
-import * as zod from 'zod'
-import { getFormErrors } from '../../utils/getFormErrors'
 import { WarningCircle } from '@phosphor-icons/react'
 
 const newProductFormSchema = zod.object({
@@ -28,7 +31,7 @@ export function ListDetails() {
     console.log(newProductData)
   }
 
-  const errorMessages = getFormErrors(errors)
+  const errorMessages = getFormErrors<NewProductFormSchema>(errors)
 
   return (
     <div className={styles.pageContainer}>
