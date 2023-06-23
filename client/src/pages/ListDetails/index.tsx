@@ -24,6 +24,9 @@ type NewProductFormSchema = zod.infer<typeof newProductFormSchema>
 export function ListDetails() {
   const { isAuthenticated, isLoading } = useContext(AuthContext)
   const navigate = useNavigate()
+  // const { id } = useParams()
+
+  // const listData =
 
   const {
     register,

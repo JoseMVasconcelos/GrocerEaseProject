@@ -29,12 +29,11 @@ export function Login() {
   } = useForm<LoginFormSchema>({
     resolver: zodResolver(loginFormSchema),
   })
+  const errorMessages = getFormErrors<LoginFormSchema>(errors)
 
   async function onLogin(loginData: LoginFormSchema) {
     await handleLogin(loginData)
   }
-
-  const errorMessages = getFormErrors<LoginFormSchema>(errors)
 
   return (
     <section className={styles.pageContainer}>

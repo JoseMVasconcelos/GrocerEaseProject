@@ -57,15 +57,21 @@ async function signUp(userCredentials) {
  */
 async function login(userCredentials) {
     const { email, password } = userCredentials;
-
     const user = await User.findOne({ email });
+
+    if (!user) {
+        return {
+            message: 'Usuário inexistente',
+            status: 401
+        };
+    }
 
     const passwordIsCorrect = bcrypt.compareSync(password, user.password);
 
     // Se o usuário não existir, ou se a senha estiver incorreta, retornará Unauthorized.
-    if (!user || !passwordIsCorrect) {
-        return unauthorizedResponse = {
-            message: 'Credenciais inválidas ou usuário inexistente.',
+    if (!passwordIsCorrect) {
+        return {
+            message: 'Credenciais inválidas',
             status: 401
         };
     }

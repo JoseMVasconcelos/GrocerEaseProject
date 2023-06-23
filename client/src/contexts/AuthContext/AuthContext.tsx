@@ -2,6 +2,7 @@ import { ReactNode, createContext, useEffect, useState } from 'react'
 import { api } from '../../lib/axios'
 import { useNavigate } from 'react-router'
 import { decodeJWTToken } from '../../utils/decodeJWTToken'
+import axios from 'axios'
 
 interface LoginCredentials {
   email: string
@@ -23,6 +24,7 @@ interface AuthContextType {
   handleLogin: (userData: LoginCredentials) => Promise<void>
   handleLogout: () => Promise<void>
   handleEditUserData: (userData: SignUpCredentials) => Promise<void>
+  apiError: string | null
   userData: UserData
   isAuthenticated: boolean
   isLoading: boolean
@@ -38,6 +40,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [userData, setUserData] = useState<UserData>({} as UserData)
+  const [apiError, setApiError] = useState<string | null>(null)
 
   const navigate = useNavigate()
 
@@ -55,56 +58,88 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   }, [])
 
   async function handleSignUp(credentials: SignUpCredentials): Promise<void> {
-    const {
-      data: { data: token },
-    } = await api.post('/signUp', {
-      ...credentials,
-      confirm_password: credentials.password,
-    })
+    try {
+      const {
+        data: { data: token },
+      } = await api.post('/signUp', {
+        ...credentials,
+        confirm_password: credentials.password,
+      })
 
-    localStorage.setItem('token', JSON.stringify(token))
-    api.defaults.headers.Authorization = `Bearer ${token}`
+      localStorage.setItem('token', JSON.stringify(token))
+      api.defaults.headers.Authorization = `Bearer ${token}`
 
-    setUserData(decodeJWTToken(token))
-    setIsAuthenticated(true)
-    navigate('/shopping-lists')
+      setUserData(decodeJWTToken(token))
+      setIsAuthenticated(true)
+      navigate('/shopping-lists')
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response && error.response.data) {
+        setApiError(error.response.data.message)
+      } else {
+        setApiError('erro! tente novamente mais tarde')
+      }
+    }
   }
 
   async function handleLogin(credentials: LoginCredentials): Promise<void> {
-    const {
-      data: { token },
-    } = await api.post('/login', credentials)
+    try {
+      const {
+        data: { token },
+      } = await api.post('/login', credentials)
 
-    localStorage.setItem('token', JSON.stringify(token))
-    api.defaults.headers.Authorization = `Bearer ${token}`
+      localStorage.setItem('token', JSON.stringify(token))
+      api.defaults.headers.Authorization = `Bearer ${token}`
 
-    setUserData(decodeJWTToken(token))
-    setIsAuthenticated(true)
-    navigate('/shopping-lists')
+      setUserData(decodeJWTToken(token))
+      setIsAuthenticated(true)
+      navigate('/shopping-lists')
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response && error.response.data) {
+        setApiError(error.response.data.message)
+      } else {
+        setApiError('erro! tente novamente mais tarde')
+      }
+    }
   }
 
   async function handleLogout(): Promise<void> {
-    await api.post('/logout')
+    try {
+      await api.post('/logout')
 
-    setIsAuthenticated(false)
-    setUserData({} as UserData)
-    localStorage.removeItem('token')
-    api.defaults.headers.Authorization = null
-    navigate('/shopping-lists')
+      setIsAuthenticated(false)
+      setUserData({} as UserData)
+      localStorage.removeItem('token')
+      api.defaults.headers.Authorization = null
+      navigate('/shopping-lists')
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response && error.response.data) {
+        setApiError(error.response.data.message)
+      } else {
+        setApiError('tente novamente mais tarde')
+      }
+    }
   }
 
   async function handleEditUserData(
     credentials: SignUpCredentials,
   ): Promise<void> {
-    const {
-      data: { token },
-    } = await api.patch('/users', credentials)
+    try {
+      const {
+        data: { token },
+      } = await api.patch('/users', credentials)
 
-    localStorage.setItem('token', JSON.stringify(token))
-    api.defaults.headers.Authorization = `Bearer ${token}`
+      localStorage.setItem('token', JSON.stringify(token))
+      api.defaults.headers.Authorization = `Bearer ${token}`
 
-    setUserData(decodeJWTToken(token))
-    setIsAuthenticated(true)
+      setUserData(decodeJWTToken(token))
+      setIsAuthenticated(true)
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response && error.response.data) {
+        setApiError(error.response.data.message)
+      } else {
+        setApiError('tente novamente mais tarde')
+      }
+    }
   }
 
   return (
@@ -115,6 +150,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         handleLogout,
         handleEditUserData,
         userData,
+        apiError,
         isAuthenticated,
         isLoading,
       }}

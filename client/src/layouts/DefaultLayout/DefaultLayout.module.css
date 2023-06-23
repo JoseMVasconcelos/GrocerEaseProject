@@ -8,3 +8,10 @@
   margin: 0 auto;
   padding: 0 1rem;
 }
+
+.errorCard {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  background-color: var(--warning);
+}

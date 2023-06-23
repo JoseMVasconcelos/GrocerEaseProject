@@ -1,14 +1,15 @@
 import styles from './ShoppingLists.module.css'
-import { mockLists } from './mockLists'
 
 import { ListCard } from './components/ListCard'
 import { NewListModal } from './components/NewListModal'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { useAuthContext } from '../../hooks/useAuthContext'
+import { useShoppingListsContext } from '../../hooks/useShoppingListsContext'
 
 export function ShoppingLists() {
   const { isAuthenticated, isLoading, userData } = useAuthContext()
+  const { fetchLists, shoppingLists } = useShoppingListsContext()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -16,6 +17,10 @@ export function ShoppingLists() {
       navigate('/login')
     }
   }, [isAuthenticated, navigate])
+
+  useEffect(() => {
+    fetchLists()
+  }, [fetchLists])
 
   if (!isAuthenticated) {
     return <></>
@@ -25,6 +30,8 @@ export function ShoppingLists() {
     return <h1>loading...</h1>
   }
 
+  console.log(shoppingLists)
+
   return (
     <div className={styles.pageContainer}>
       <h1>Seja bem-vindo de volta, {userData.name}</h1>
@@ -33,13 +40,14 @@ export function ShoppingLists() {
         <NewListModal />
       </div>
       <section className={styles.listsGrid}>
-        {mockLists.map((list) => {
+        {shoppingLists.map((list) => {
           return (
             <ListCard
               key={list.id}
-              title={list.title}
+              id={list.id}
+              title={list.name}
               description={list.description}
-              createdAt={list.createdAt}
+              createdAt={'há 5 dias'}
             />
           )
         })}

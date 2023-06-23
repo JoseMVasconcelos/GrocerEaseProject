@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const TokenAuthenticator = require('./AuthMiddleware')
 
 // Importando métodos do Service e modelos de validação.
 const { getAllLists, createNewList, updateList, deleteList, shareList } = require('./../services/ShoppingListsService')
@@ -10,12 +11,12 @@ const { createNewListSchema, updateListSchema, shareListSchema } = require('../v
  * @param {Object} req - Requisição com o token do usuário.
  * @returns {Object} - Array de listas.
  */
-router.get('/', async (req, res) => {
+router.get('/', TokenAuthenticator, async (req, res) => {
     try {
         // Buscando o Id pelo token.
         const ownerId = req.userData.userId;
         const shoppingLists = await getAllLists(ownerId);
-        return res.status(400).json(shoppingLists);
+        return res.status(200).json(shoppingLists);
     } catch (error) {
         return res.status(500).json({ exception: error.message });
     }
@@ -26,7 +27,7 @@ router.get('/', async (req, res) => {
  * @param {Object} req - Requisição com o token do usuário e os dados para criar uma lista: Nome e descrição.
  * @returns {Object} - Objeto contendo mensagem de sucesso e conteudo da lista.
  */
-router.post('/', async (req, res) => {
+router.post('/', TokenAuthenticator, async (req, res) => {
     try {
         const ownerId = req.userData.userId;
         const { error } = createNewListSchema.validate(req.body);
