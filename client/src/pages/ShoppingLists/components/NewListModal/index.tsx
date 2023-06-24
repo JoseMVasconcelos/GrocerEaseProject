@@ -20,7 +20,7 @@ const newListFormSchema = zod.object({
 type NewListFormSchema = zod.infer<typeof newListFormSchema>
 
 export function NewListModal() {
-  const { createList } = useShoppingListsContext()
+  const { onCreateList } = useShoppingListsContext()
 
   const {
     register,
@@ -30,8 +30,8 @@ export function NewListModal() {
     resolver: zodResolver(newListFormSchema),
   })
 
-  async function handleCreateNewList(newListData: NewListFormSchema) {
-    createList(newListData)
+  async function handleCreateNewList(listData: NewListFormSchema) {
+    await onCreateList(listData)
   }
 
   const errorMessages = getFormErrors<NewListFormSchema>(errors)

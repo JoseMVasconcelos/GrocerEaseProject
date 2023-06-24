@@ -16,6 +16,8 @@
 - [ ] terminar integração listas
 - [ ] mostrar erro API na tela
 - [ ] arrumar min height lista
+- [ ] spinner
+- [ ] tirar data card
 - [ ] testar
 
 ### Backend

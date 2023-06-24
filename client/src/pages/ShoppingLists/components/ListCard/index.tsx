@@ -12,7 +12,7 @@ interface ListCardProps {
 }
 
 export function ListCard({ title, description, createdAt, id }: ListCardProps) {
-  const { deleteList } = useShoppingListsContext()
+  const { onDeleteList } = useShoppingListsContext()
   const navigate = useNavigate()
 
   function handleListClick() {
@@ -22,8 +22,8 @@ export function ListCard({ title, description, createdAt, id }: ListCardProps) {
   async function handleTrashButtonClick(
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) {
-    await deleteList(id)
     e.stopPropagation()
+    await onDeleteList(id)
   }
 
   return (

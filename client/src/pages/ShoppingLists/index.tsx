@@ -9,7 +9,7 @@ import { useShoppingListsContext } from '../../hooks/useShoppingListsContext'
 
 export function ShoppingLists() {
   const { isAuthenticated, isLoading, userData } = useAuthContext()
-  const { fetchLists, shoppingLists } = useShoppingListsContext()
+  const { shoppingLists, onFetchLists } = useShoppingListsContext()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -19,8 +19,12 @@ export function ShoppingLists() {
   }, [isAuthenticated, navigate])
 
   useEffect(() => {
+    async function fetchLists() {
+      await onFetchLists()
+    }
+
     fetchLists()
-  }, [fetchLists])
+  }, [onFetchLists])
 
   if (!isAuthenticated) {
     return <></>
@@ -29,8 +33,6 @@ export function ShoppingLists() {
   if (isLoading) {
     return <h1>loading...</h1>
   }
-
-  console.log(shoppingLists)
 
   return (
     <div className={styles.pageContainer}>

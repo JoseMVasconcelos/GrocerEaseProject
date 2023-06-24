@@ -3,7 +3,7 @@ import { Check } from '@phosphor-icons/react'
 import styles from './ListItem.module.css'
 
 interface ListItemProps {
-  id: number
+  id: string
   name: string
   isChecked: boolean
 }
@@ -11,7 +11,7 @@ interface ListItemProps {
 export function ListItem({ id, name }: ListItemProps) {
   return (
     <form className={styles.form}>
-      <Checkbox.Root className={styles.checkboxRoot} id={id.toString()}>
+      <Checkbox.Root className={styles.checkboxRoot} id={id}>
         <Checkbox.Indicator>
           <Check size={14} />
         </Checkbox.Indicator>
