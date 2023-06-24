@@ -13,12 +13,12 @@
 - [x] mudar scrollbar
 - [x] mudar ::selection
 - [x] checar responsividade
-- [ ] terminar integração listas
-- [ ] mostrar erro API na tela
+- [x] terminar integração listas
+- [x] compartilhar listas
+- [ ] mostrar erro autenticacao na tela
 - [ ] arrumar min height lista
 - [ ] spinner
-- [ ] tirar data card
-- [ ] testar
+- [ ] limpar o codigo
 
 ### Backend
 

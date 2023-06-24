@@ -3,8 +3,8 @@ const router = express.Router();
 const TokenAuthenticator = require('./AuthMiddleware')
 
 // Importando métodos do Service e modelos de validação.
-const { getAllLists, createNewList, updateList, deleteList, shareList } = require('./../services/ShoppingListsService')
-const { createNewListSchema, updateListSchema, shareListSchema } = require('../validations/ShoppingListValidation')
+const { getAllLists, createNewList, updateList, deleteList, shareList, addNewProduct, toggleProductState, getListProducts } = require('./../services/ShoppingListsService')
+const { toggleProductSchema, createNewListSchema, updateListSchema, shareListSchema, newProductSchema } = require('../validations/ShoppingListValidation')
 
 /**
  * Obtém todas as listas de um usuário.
@@ -85,8 +85,46 @@ router.post('/share/:listId', async (req, res) => {
         const { error } = shareListSchema.validate(req.body)
         if (error) return res.status(400).json({ exception: error.message });
         
-        await shareList(listId, req.body.newOwnerId)
+        await shareList(listId, req.body.email)
         return res.status(200).json({ message: "Lista compartilhada com sucesso!" });
+    } catch (error) {
+        return res.status(500).json({ exception: error.message });
+    }
+})
+
+router.get('/:listId/product', async (req, res) => {
+    try {
+        const { listId } = req.params;
+        const products = await getListProducts(listId)
+        return res.status(200).json({ data: products });
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ exception: error.message });
+    }
+})
+
+router.post('/:listId/product', async (req, res) => {
+    try {
+        const { listId } = req.params;
+        const { error } = newProductSchema.validate(req.body)
+        if (error) return res.status(400).json({ exception: error.message });
+        
+        const newProduct = await addNewProduct(listId, req.body.productName)
+        return res.status(200).json({ message: "Produto criado com sucesso!", data: newProduct });
+    } catch (error) {
+        return res.status(500).json({ exception: error.message });
+    }
+})
+
+router.patch('/product/:productId', async (req, res) => {
+    try {
+        const { productId } = req.params;
+        const { error } = toggleProductSchema.validate(req.body)
+        console.log(req.body)
+        if (error) return res.status(400).json({ exception: error.message });
+        
+        const newProduct = await toggleProductState(productId, req.body.isChecked)
+        return res.status(200).json({ message: "Produto atualizado com sucesso!", data: newProduct });
     } catch (error) {
         return res.status(500).json({ exception: error.message });
     }

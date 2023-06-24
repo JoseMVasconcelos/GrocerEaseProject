@@ -10,11 +10,14 @@ import { ListItem } from './components/ListItem'
 import { CustomButton } from '../../components/CustomButton'
 import { CustomInput } from '../../components/CustomInput'
 import { WarningCircle } from '@phosphor-icons/react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { useAuthContext } from '../../hooks/useAuthContext'
-import { useShoppingListsContext } from '../../hooks/useShoppingListsContext'
-import { ShoppingList } from '../../api/shoppingLists'
+import {
+  ListProduct,
+  createProduct,
+  getListProducts,
+} from '../../api/shoppingLists'
 
 const newProductFormSchema = zod.object({
   productName: zod.string().min(1, 'Informe o nome do novo produto'),
@@ -23,12 +26,27 @@ const newProductFormSchema = zod.object({
 type NewProductFormSchema = zod.infer<typeof newProductFormSchema>
 
 export function ListDetails() {
-  const { isAuthenticated, isLoading } = useAuthContext()
-  const { onAddNewProduct, shoppingLists } = useShoppingListsContext()
-  const navigate = useNavigate()
+  const [products, setProducts] = useState<ListProduct[]>([])
+  console.log(products)
 
-  const { id: listId } = useParams() as { id: string }
-  const list = shoppingLists.find((list) => list.id === listId) as ShoppingList
+  const { id: listId } = useParams()
+
+  // componente montou -> undefined 1x o useEffect
+  // pega o id da url -> seta o id 1x o useEffect
+
+  useEffect(() => {
+    async function getData() {
+      const products = await getListProducts(listId as string)
+      setProducts(products)
+    }
+
+    if (typeof listId !== 'undefined') {
+      getData()
+    }
+  }, [listId])
+
+  const { isAuthenticated, isLoading } = useAuthContext()
+  const navigate = useNavigate()
 
   const {
     register,
@@ -44,8 +62,12 @@ export function ListDetails() {
     }
   }, [isAuthenticated, navigate])
 
-  function handleAddNewProduct(newProductData: NewProductFormSchema) {
-    onAddNewProduct(listId, newProductData.productName)
+  async function handleAddNewProduct(newProductData: NewProductFormSchema) {
+    const product = await createProduct(
+      listId as string,
+      newProductData.productName,
+    )
+    setProducts((prevProducts) => [...prevProducts, product])
   }
 
   const errorMessages = getFormErrors<NewProductFormSchema>(errors)
@@ -84,13 +106,13 @@ export function ListDetails() {
       </form>
       <section className={styles.listProducts}>
         <h2>Produtos da Lista</h2>
-        {list.products.map((listItem) => {
+        {products.map((product) => {
           return (
             <ListItem
-              key={listItem.id}
-              id={listItem.id}
-              name={listItem.name}
-              isChecked={listItem.isChecked}
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              isChecked={product.isChecked}
             />
           )
         })}

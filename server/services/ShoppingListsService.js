@@ -1,4 +1,6 @@
 const ShoppingList = require('../models/ShoppingListModel');
+const Product = require('../models/ProductModel');
+const User = require('../models/UserModel');
 
 /**
  * Obtém todas as listas de um usuário.
@@ -45,10 +47,36 @@ async function deleteList(listId) {
  * @param {String} listId - Id da lista.
  * @param {String} newOwnerId - Id do novo usuário com acesso a lista.
  */
-async function shareList(listId, newOwnerId) {
-   const list = await ShoppingList.findById(listId)
-   list.owners.push(newOwnerId)
+async function shareList(listId, email) {
+   const list = await ShoppingList.find(listId)
+   const user = await User.find({ email: email })
+   list.owners.push(user)
    await list.save()
+}
+
+async function addNewProduct(listId, productName) {
+   const list = await ShoppingList.findById(listId)
+   const newProduct = Product({
+        name: productName,
+        isChecked: false
+   })
+   const savedProduct = await newProduct.save();
+
+   list.products.push(savedProduct._id)
+   await list.save()
+
+   return savedProduct
+}
+
+async function toggleProductState(productId, isChecked) {
+   const product = await Product.findById(productId)
+   product.isChecked = isChecked
+   await product.save();
+}
+
+async function getListProducts(listId) {
+    const list = await ShoppingList.findById(listId).populate('products')
+    return list.products
 }
 
 module.exports = {
@@ -56,5 +84,8 @@ module.exports = {
     createNewList,
     updateList,
     deleteList,
-    shareList
+    shareList,
+    addNewProduct,
+    toggleProductState,
+    getListProducts
 }

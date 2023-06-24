@@ -1,5 +1,5 @@
 import styles from './ListCard.module.css'
-import { Trash } from '@phosphor-icons/react'
+import { ShareNetwork, Trash } from '@phosphor-icons/react'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useShoppingListsContext } from '../../../../hooks/useShoppingListsContext'
@@ -11,7 +11,7 @@ interface ListCardProps {
   id: string
 }
 
-export function ListCard({ title, description, createdAt, id }: ListCardProps) {
+export function ListCard({ title, description, id }: ListCardProps) {
   const { onDeleteList } = useShoppingListsContext()
   const navigate = useNavigate()
 
@@ -30,7 +30,7 @@ export function ListCard({ title, description, createdAt, id }: ListCardProps) {
     <article className={styles.listCard} onClick={handleListClick}>
       <header>
         <h3>{title}</h3>
-        <span>{createdAt}</span>
+        <ShareNetwork />
       </header>
       <div>
         <p>{description}</p>

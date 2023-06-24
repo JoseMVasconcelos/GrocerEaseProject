@@ -12,7 +12,6 @@ interface ShoppingListsContextType {
   onFetchLists: () => Promise<void>
   onCreateList: (newList: NewList) => Promise<void>
   onDeleteList: (listId: string) => Promise<void>
-  onAddNewProduct: (listId: string, productName: string) => void
   shoppingLists: ShoppingList[]
 }
 
@@ -47,27 +46,42 @@ export function ShoppingListsContextProvider({
     setShoppingLists((lists) => lists.filter((list) => list.id !== listId))
   }
 
-  function onAddNewProduct(listId: string, productName: string): void {
-    setShoppingLists((lists) => {
-      return lists.map((list) => {
-        if (list.id !== listId) {
-          return list
-        }
+  // function onAddNewProduct(listId: string, productName: string): void {
+  //   setShoppingLists((lists) => {
+  //     return lists.map((list) => {
+  //       if (list.id !== listId) {
+  //         return list
+  //       }
 
-        return {
-          ...list,
-          products: [
-            ...list.products,
-            {
-              name: productName,
-              isChecked: false,
-              id: productName,
-            },
-          ],
-        }
-      })
-    })
-  }
+  //       return {
+  //         ...list,
+  //         products: [
+  //           ...list.products,
+  //           {
+  //             name: productName,
+  //             isChecked: false,
+  //             id: productName,
+  //           },
+  //         ],
+  //       }
+  //     })
+  //   })
+  // }
+
+  // function onToggleProduct(listId: string, isChecked: boolean): void {
+  //   setShoppingLists((lists) => {
+  //     return lists.map((list) => {
+  //       if (list.id !== listId) {
+  //         return list
+  //       }
+
+  //       return {
+  //         ...list,
+  //         products: [...list.products],
+  //       }
+  //     })
+  //   })
+  // }
 
   return (
     <ShoppingListsContext.Provider
@@ -76,7 +90,6 @@ export function ShoppingListsContextProvider({
         onFetchLists,
         onCreateList,
         onDeleteList,
-        onAddNewProduct,
       }}
     >
       {children}

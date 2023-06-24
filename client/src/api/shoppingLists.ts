@@ -26,7 +26,7 @@ interface ListRawData {
   products: RawProduct[]
 }
 
-interface ListProduct {
+export interface ListProduct {
   name: string
   isChecked: boolean
   id: string
@@ -79,4 +79,37 @@ export async function createList(newList: NewList) {
 
 export async function deleteList(listId: string): Promise<void> {
   await api.delete(`/shoppingLists/${listId}`)
+}
+
+export async function createProduct(listId: string, productName: string) {
+  const {
+    data: {
+      data: { isChecked, name, _id: id },
+    },
+  } = await api.post(`/shoppingLists/${listId}/product`, {
+    productName,
+  })
+
+  return {
+    name,
+    isChecked,
+    id,
+  }
+}
+
+export async function toggleProductState(
+  productId: string,
+  isChecked: boolean | 'indeterminate',
+) {
+  console.log(productId, isChecked)
+  await api.patch(`/shoppingLists/product/${productId}`, {
+    isChecked,
+  })
+}
+
+export async function getListProducts(listId: string) {
+  const {
+    data: { data: products },
+  } = await api.get(`/shoppingLists/${listId}/product`)
+  return mapProductsData(products)
 }

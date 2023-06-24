@@ -4,12 +4,7 @@ const { Schema } = mongoose;
 const shoppingListSchema = new Schema({
     name: String,
     description: String,
-    products: [
-        {
-            name: String,
-            isChecked: Boolean
-        }
-    ],
+    products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
     owners: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 })
 
