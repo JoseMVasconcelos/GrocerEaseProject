@@ -18,7 +18,7 @@ const updateListSchema = joi.object({
 });
 
 const shareListSchema = joi.object({
-    email: joi.email().required()
+    email: joi.string().email().required()
 });
 
 const newProductSchema = joi.object({

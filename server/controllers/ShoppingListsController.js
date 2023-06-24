@@ -98,7 +98,6 @@ router.get('/:listId/product', async (req, res) => {
         const products = await getListProducts(listId)
         return res.status(200).json({ data: products });
     } catch (error) {
-        console.log(error)
         return res.status(500).json({ exception: error.message });
     }
 })
@@ -120,7 +119,6 @@ router.patch('/product/:productId', async (req, res) => {
     try {
         const { productId } = req.params;
         const { error } = toggleProductSchema.validate(req.body)
-        console.log(req.body)
         if (error) return res.status(400).json({ exception: error.message });
         
         const newProduct = await toggleProductState(productId, req.body.isChecked)
