@@ -1,10 +1,16 @@
 .listCard {
   cursor: pointer;
   background-color: var(--base-card);
-  border-radius: 6px;
-  padding: 1rem;
+
   width: 30rem;
   max-width: 80vw;
+  height: 100px;
+  padding: 1rem;
+  border-radius: 6px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .listCard > header {
@@ -17,31 +23,27 @@
   font-size: 1.25rem;
 }
 
-.listCard > header > span {
-  font-size: 0.875rem;
-}
-
 .listCard > div {
   display: flex;
-  align-items: flex-end;
   justify-content: space-between;
+  align-items: flex-end;
 }
 
 .listCard > div > p {
   font-size: 1rem;
   width: 90%;
 
-  max-height: calc(1.6 * 1rem * 3);
+  max-height: calc(1.6 * 1rem);
 
   overflow: hidden;
   text-overflow: ellipsis;
 
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 1;
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }
 
-.iconContainer {
+.trashIconContainer, .shareIconContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,17 +53,24 @@
   transition: background-color 0.125s ease-in-out;
 }
 
-.iconContainer:hover {
+.trashIconContainer:hover, .shareIconContainer:hover {
   background-color: #dedede;
 }
 
-
-.iconContainer > svg {
+.trashIconContainer > svg, .shareIconContainer > svg {
   color: var(--green-400);
   transition: color 0.125s ease-in-out;
 }
 
-.iconContainer:hover > svg {
+.trashIconContainer:hover > svg {
   color: var(--warning);
+}
+
+.shareIconContainer {
+  padding: 4px;
+}
+
+.shareIconContainer:hover > svg {
+  color: var(--green-200);
 }
 

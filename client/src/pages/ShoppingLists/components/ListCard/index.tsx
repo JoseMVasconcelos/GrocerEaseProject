@@ -32,11 +32,16 @@ export function ListCard({ title, description, id }: ListCardProps) {
     <article className={styles.listCard} onClick={handleListClick}>
       <header>
         <h3>{title}</h3>
-        <ShareNetwork />
+        <div className={styles.shareIconContainer}>
+          <ShareNetwork size={18} />
+        </div>
       </header>
       <div>
         <p>{description}</p>
-        <div className={styles.iconContainer} onClick={handleTrashButtonClick}>
+        <div
+          className={styles.trashIconContainer}
+          onClick={handleTrashButtonClick}
+        >
           <Trash size={22} />
         </div>
       </div>
