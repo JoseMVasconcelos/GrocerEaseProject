@@ -6,7 +6,7 @@ import {
   createList,
   deleteList,
   fetchLists,
-} from '../../api/shoppingLists'
+} from '../../services/shoppingLists'
 
 interface ShoppingListsContextType {
   onFetchLists: () => Promise<void>
@@ -35,53 +35,13 @@ export function ShoppingListsContextProvider({
 
   async function onCreateList(newList: NewList) {
     const { name, description, id } = await createList(newList)
-    setShoppingLists((lists) => [
-      ...lists,
-      { name, description, id, products: [] },
-    ])
+    setShoppingLists((lists) => [...lists, { name, description, id }])
   }
 
   async function onDeleteList(listId: string) {
     await deleteList(listId)
     setShoppingLists((lists) => lists.filter((list) => list.id !== listId))
   }
-
-  // function onAddNewProduct(listId: string, productName: string): void {
-  //   setShoppingLists((lists) => {
-  //     return lists.map((list) => {
-  //       if (list.id !== listId) {
-  //         return list
-  //       }
-
-  //       return {
-  //         ...list,
-  //         products: [
-  //           ...list.products,
-  //           {
-  //             name: productName,
-  //             isChecked: false,
-  //             id: productName,
-  //           },
-  //         ],
-  //       }
-  //     })
-  //   })
-  // }
-
-  // function onToggleProduct(listId: string, isChecked: boolean): void {
-  //   setShoppingLists((lists) => {
-  //     return lists.map((list) => {
-  //       if (list.id !== listId) {
-  //         return list
-  //       }
-
-  //       return {
-  //         ...list,
-  //         products: [...list.products],
-  //       }
-  //     })
-  //   })
-  // }
 
   return (
     <ShoppingListsContext.Provider

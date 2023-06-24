@@ -2,6 +2,7 @@ import styles from './ShoppingLists.module.css'
 
 import { ListCard } from './components/ListCard'
 import { NewListModal } from './components/NewListModal'
+
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { useAuthContext } from '../../hooks/useAuthContext'
@@ -36,7 +37,7 @@ export function ShoppingLists() {
 
   return (
     <div className={styles.pageContainer}>
-      <h1>Seja bem-vindo de volta, {userData.name}</h1>
+      <h1>Seja bem-vindo (a), {userData.name}!</h1>
       <div>
         <p>As suas listas de compras:</p>
         <NewListModal />
@@ -49,7 +50,6 @@ export function ShoppingLists() {
               id={list.id}
               title={list.name}
               description={list.description}
-              createdAt={'há 5 dias'}
             />
           )
         })}

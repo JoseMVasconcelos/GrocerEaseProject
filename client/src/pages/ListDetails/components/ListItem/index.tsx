@@ -2,7 +2,7 @@ import * as Checkbox from '@radix-ui/react-checkbox'
 import { Check } from '@phosphor-icons/react'
 import styles from './ListItem.module.css'
 import { useState } from 'react'
-import { toggleProductState } from '../../../../api/shoppingLists'
+import { toggleProductState } from '../../../../services/listProducts'
 
 interface ListItemProps {
   id: string

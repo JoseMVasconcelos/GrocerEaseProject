@@ -1,7 +1,5 @@
 import styles from './ListDetails.module.css'
 
-import { getFormErrors } from '../../utils/getFormErrors'
-
 import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -10,14 +8,18 @@ import { ListItem } from './components/ListItem'
 import { CustomButton } from '../../components/CustomButton'
 import { CustomInput } from '../../components/CustomInput'
 import { WarningCircle } from '@phosphor-icons/react'
+
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { useAuthContext } from '../../hooks/useAuthContext'
+
 import {
   ListProduct,
   createProduct,
-  getListProducts,
-} from '../../api/shoppingLists'
+  fetchProducts,
+} from '../../services/listProducts'
+
+import { getFormErrors } from '../../utils/getFormErrors'
 
 const newProductFormSchema = zod.object({
   productName: zod.string().min(1, 'Informe o nome do novo produto'),
@@ -27,26 +29,21 @@ type NewProductFormSchema = zod.infer<typeof newProductFormSchema>
 
 export function ListDetails() {
   const [products, setProducts] = useState<ListProduct[]>([])
-  console.log(products)
+  const { isAuthenticated, isLoading } = useAuthContext()
 
   const { id: listId } = useParams()
-
-  // componente montou -> undefined 1x o useEffect
-  // pega o id da url -> seta o id 1x o useEffect
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function getData() {
-      const products = await getListProducts(listId as string)
-      setProducts(products)
+      if (typeof listId !== 'undefined') {
+        const products = await fetchProducts(listId)
+        setProducts(products)
+      }
     }
 
-    if (typeof listId !== 'undefined') {
-      getData()
-    }
+    getData()
   }, [listId])
-
-  const { isAuthenticated, isLoading } = useAuthContext()
-  const navigate = useNavigate()
 
   const {
     register,
@@ -63,11 +60,10 @@ export function ListDetails() {
   }, [isAuthenticated, navigate])
 
   async function handleAddNewProduct(newProductData: NewProductFormSchema) {
-    const product = await createProduct(
-      listId as string,
-      newProductData.productName,
-    )
-    setProducts((prevProducts) => [...prevProducts, product])
+    if (typeof listId !== 'undefined') {
+      const product = await createProduct(listId, newProductData.productName)
+      setProducts((prevProducts) => [...prevProducts, product])
+    }
   }
 
   const errorMessages = getFormErrors<NewProductFormSchema>(errors)

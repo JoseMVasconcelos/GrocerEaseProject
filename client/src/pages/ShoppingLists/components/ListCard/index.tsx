@@ -1,13 +1,15 @@
 import styles from './ListCard.module.css'
-import { ShareNetwork, Trash } from '@phosphor-icons/react'
+
 import React from 'react'
+
 import { useNavigate } from 'react-router-dom'
 import { useShoppingListsContext } from '../../../../hooks/useShoppingListsContext'
+
+import { ShareNetwork, Trash } from '@phosphor-icons/react'
 
 interface ListCardProps {
   title: string
   description: string
-  createdAt: string
   id: string
 }
 
