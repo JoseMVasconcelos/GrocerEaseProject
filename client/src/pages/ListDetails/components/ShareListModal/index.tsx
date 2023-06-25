@@ -25,6 +25,7 @@ interface ShareListModalProps {
 }
 
 export function ShareListModal({ listId }: ShareListModalProps) {
+  const [open, setOpen] = useState(false)
   const [authError, setAuthError] = useState('')
   const {
     register,
@@ -41,6 +42,7 @@ export function ShareListModal({ listId }: ShareListModalProps) {
         await shareList(listId, shareListFormData.email)
       }
       reset()
+      setOpen(false)
     } catch (error: any) {
       setAuthError(
         error.response?.data?.message ||
@@ -52,7 +54,7 @@ export function ShareListModal({ listId }: ShareListModalProps) {
   const errorMessages = getFormErrors<ShareListFormSchema>(errors)
 
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
         <div className={styles.triggerButton}>
           <ShareNetwork size={14} />
