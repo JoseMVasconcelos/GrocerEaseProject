@@ -5,6 +5,7 @@ import { SignUp } from '../pages/SignUp'
 import { Login } from '../pages/Login'
 import { ShoppingLists } from '../pages/ShoppingLists'
 import { ListDetails } from '../pages/ListDetails'
+import { NotFound } from './NotFound'
 
 export function Router() {
   return (
@@ -15,6 +16,7 @@ export function Router() {
         <Route path="/login" element={<Login />} />
         <Route path="/shopping-lists" element={<ShoppingLists />} />
         <Route path="/shopping-lists/:id" element={<ListDetails />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   )
