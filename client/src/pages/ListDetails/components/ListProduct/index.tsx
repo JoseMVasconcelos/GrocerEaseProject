@@ -1,16 +1,16 @@
 import * as Checkbox from '@radix-ui/react-checkbox'
 import { Check } from '@phosphor-icons/react'
-import styles from './ListItem.module.css'
+import styles from './ListProduct.module.css'
 import { useState } from 'react'
 import { toggleProductState } from '../../../../services/listProducts'
 
-interface ListItemProps {
+interface ListProductProps {
   id: string
   name: string
   isChecked: boolean | 'indeterminate'
 }
 
-export function ListItem({ id, name, isChecked }: ListItemProps) {
+export function ListProduct({ id, name, isChecked }: ListProductProps) {
   const [checked, setChecked] = useState<boolean | 'indeterminate'>(isChecked)
 
   async function handleToggleProduct(checked: boolean | 'indeterminate') {
@@ -19,7 +19,9 @@ export function ListItem({ id, name, isChecked }: ListItemProps) {
   }
 
   return (
-    <form className={styles.form}>
+    <form
+      className={checked ? `${styles.form} ${styles.checked}` : styles.form}
+    >
       <Checkbox.Root
         className={styles.checkboxRoot}
         id={id}
