@@ -40,14 +40,18 @@ export function ListDetails() {
 
   useEffect(() => {
     async function getData() {
-      if (typeof listId !== 'undefined') {
-        const products = await fetchProducts(listId)
-        setProducts(products)
+      try {
+        if (typeof listId !== 'undefined') {
+          const products = await fetchProducts(listId)
+          setProducts(products)
+        }
+      } catch {
+        navigate('/shopping-lists')
       }
     }
 
     getData()
-  }, [listId])
+  }, [listId, navigate])
 
   const {
     register,
