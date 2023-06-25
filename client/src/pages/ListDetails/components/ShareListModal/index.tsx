@@ -11,7 +11,7 @@ import { getFormErrors } from '../../../../utils/getFormErrors'
 import { CustomInput } from '../../../../components/CustomInput'
 import { CustomButton } from '../../../../components/CustomButton'
 import { ShareNetwork, WarningCircle, X } from '@phosphor-icons/react'
-// import { useShoppingListsContext } from '../../../../hooks/useShoppingListsContext'
+import { shareList } from '../../../../services/shoppingLists'
 
 const shareListFormSchema = zod.object({
   email: zod.string().email('Informe um email válido'),
@@ -19,7 +19,11 @@ const shareListFormSchema = zod.object({
 
 type ShareListFormSchema = zod.infer<typeof shareListFormSchema>
 
-export function ShareListModal() {
+interface ShareListModalProps {
+  listId: string | undefined
+}
+
+export function ShareListModal({ listId }: ShareListModalProps) {
   const {
     register,
     handleSubmit,
@@ -28,7 +32,11 @@ export function ShareListModal() {
     resolver: zodResolver(shareListFormSchema),
   })
 
-  function handleShareList() {}
+  async function handleShareList(shareListFormData: ShareListFormSchema) {
+    if (listId) {
+      await shareList(listId, shareListFormData.email)
+    }
+  }
 
   const errorMessages = getFormErrors<ShareListFormSchema>(errors)
 
