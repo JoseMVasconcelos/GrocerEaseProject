@@ -107,7 +107,7 @@ export function ListDetails() {
       <section className={styles.listProducts}>
         <div>
           <h2>Produtos da Lista</h2>
-          <ShareListModal />
+          <ShareListModal listId={listId} />
         </div>
         {products.map((product) => {
           return (

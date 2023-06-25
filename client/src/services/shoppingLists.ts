@@ -49,3 +49,7 @@ export async function createList(newList: NewList): Promise<ShoppingList> {
 export async function deleteList(listId: string): Promise<void> {
   await api.delete(`/shoppingLists/${listId}`)
 }
+
+export async function shareList(listId: string, email: string): Promise<void> {
+  await api.post(`shoppingLists/share/${listId}`, { email })
+}

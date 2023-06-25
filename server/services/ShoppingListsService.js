@@ -48,9 +48,9 @@ async function deleteList(listId) {
  * @param {String} newOwnerId - Id do novo usuário com acesso a lista.
  */
 async function shareList(listId, email) {
-   const list = await ShoppingList.find(listId)
-   const user = await User.find({ email: email })
-   list.owners.push(user)
+   const list = await ShoppingList.findById(listId)
+   const user = await User.findOne({ email: email })
+   list.owners.push(user._id)
    await list.save()
 }
 
