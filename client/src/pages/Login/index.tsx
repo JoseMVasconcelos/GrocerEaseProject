@@ -9,8 +9,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { CustomButton } from '../../components/CustomButton'
 import { CustomInput } from '../../components/CustomInput'
 import { WarningCircle } from '@phosphor-icons/react'
-import { useContext } from 'react'
-import { AuthContext } from '../../contexts/AuthContext/AuthContext'
+import { useState, useEffect } from 'react'
+import { useAuthContext } from '../../hooks/useAuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const loginFormSchema = zod.object({
   email: zod.string().email('Informe um email válido'),
@@ -20,7 +21,15 @@ const loginFormSchema = zod.object({
 type LoginFormSchema = zod.infer<typeof loginFormSchema>
 
 export function Login() {
-  const { handleLogin } = useContext(AuthContext)
+  const { handleLogin, isAuthenticated } = useAuthContext()
+  const [authError, setAuthError] = useState('')
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/shopping-lists')
+    }
+  }, [isAuthenticated, navigate])
 
   const {
     handleSubmit,
@@ -32,12 +41,29 @@ export function Login() {
   const errorMessages = getFormErrors<LoginFormSchema>(errors)
 
   async function onLogin(loginData: LoginFormSchema) {
-    await handleLogin(loginData)
+    try {
+      await handleLogin(loginData)
+    } catch (error: any) {
+      setAuthError(
+        error.response?.data?.message ||
+          'Ocorreu um erro ao acessar o servidor',
+      )
+    }
+  }
+
+  if (isAuthenticated) {
+    return <></>
   }
 
   return (
     <section className={styles.pageContainer}>
       <h1>Faça o seu login!</h1>
+      {authError.length > 0 && (
+        <div className={styles.error}>
+          <WarningCircle />
+          <h2>{authError}</h2>
+        </div>
+      )}
       {!!errorMessages && (
         <div>
           {errorMessages.map((error) => {

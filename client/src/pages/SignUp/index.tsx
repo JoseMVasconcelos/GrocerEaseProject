@@ -10,8 +10,9 @@ import { CustomButton } from '../../components/CustomButton'
 import { CustomInput } from '../../components/CustomInput'
 import { WarningCircle } from '@phosphor-icons/react'
 
-import { useContext } from 'react'
-import { AuthContext } from '../../contexts/AuthContext/AuthContext'
+import { useEffect, useState } from 'react'
+import { useAuthContext } from '../../hooks/useAuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const signUpFormSchema = zod.object({
   email: zod.string().email('Informe um email válido'),
@@ -24,7 +25,15 @@ const signUpFormSchema = zod.object({
 type SignUpFormSchema = zod.infer<typeof signUpFormSchema>
 
 export function SignUp() {
-  const { handleSignUp } = useContext(AuthContext)
+  const { handleSignUp, isAuthenticated } = useAuthContext()
+  const [authError, setAuthError] = useState('')
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/shopping-lists')
+    }
+  }, [isAuthenticated, navigate])
 
   const {
     handleSubmit,
@@ -35,14 +44,32 @@ export function SignUp() {
   })
 
   async function onSignUp(signUpData: SignUpFormSchema) {
-    await handleSignUp(signUpData)
+    try {
+      await handleSignUp(signUpData)
+    } catch (error: any) {
+      console.log(error)
+      setAuthError(
+        error.response?.data?.message ||
+          'Ocorreu um erro ao acessar o servidor',
+      )
+    }
   }
 
   const errorMessages = getFormErrors<SignUpFormSchema>(errors)
 
+  if (isAuthenticated) {
+    return <></>
+  }
+
   return (
     <section className={styles.pageContainer}>
       <h1>Realize o seu cadastro!</h1>
+      {authError.length > 0 && (
+        <div className={styles.error}>
+          <WarningCircle />
+          <h2>{authError}</h2>
+        </div>
+      )}
       {!!errorMessages && (
         <div>
           {errorMessages.map((error) => {
