@@ -50,6 +50,9 @@ async function deleteList(listId) {
 async function shareList(listId, email) {
    const list = await ShoppingList.findById(listId)
    const user = await User.findOne({ email: email })
+   if (!user) {
+    return 'usuário não encontrado'
+   }
    list.owners.push(user._id)
    await list.save()
 }

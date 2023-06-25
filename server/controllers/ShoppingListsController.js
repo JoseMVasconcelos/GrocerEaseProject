@@ -84,7 +84,10 @@ router.post('/share/:listId', async (req, res) => {
         const { listId } = req.params;
         const { error } = shareListSchema.validate(req.body)
         if (error) return res.status(400).json({ exception: error.message });
-        await shareList(listId, req.body.email)
+        const shareListError = await shareList(listId, req.body.email)
+        if (shareListError) {
+            return res.status(400).json({ message: shareListError })
+        }
         return res.status(200).json({ message: "Lista compartilhada com sucesso!" });
     } catch (error) {
         return res.status(500).json({ exception: error.message });
