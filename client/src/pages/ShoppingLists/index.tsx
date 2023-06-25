@@ -9,7 +9,7 @@ import { useAuthContext } from '../../hooks/useAuthContext'
 import { useShoppingListsContext } from '../../hooks/useShoppingListsContext'
 
 export function ShoppingLists() {
-  const { isAuthenticated, isLoading, userData } = useAuthContext()
+  const { isAuthenticated, isLoading, username } = useAuthContext()
   const { shoppingLists, onFetchLists } = useShoppingListsContext()
   const navigate = useNavigate()
 
@@ -37,7 +37,7 @@ export function ShoppingLists() {
 
   return (
     <div className={styles.pageContainer}>
-      <h1>Seja bem-vindo (a), {userData.name}!</h1>
+      <h1>Seja bem-vindo (a), {username}!</h1>
       <div>
         <p>As suas listas de compras:</p>
         <NewListModal />

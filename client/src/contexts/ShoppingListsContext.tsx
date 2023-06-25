@@ -6,7 +6,7 @@ import {
   createList,
   deleteList,
   fetchLists,
-} from '../../services/shoppingLists'
+} from '../services/shoppingLists'
 
 interface ShoppingListsContextType {
   onFetchLists: () => Promise<void>
