@@ -5,7 +5,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useShoppingListsContext } from '../../../../hooks/useShoppingListsContext'
 
-import { ShareNetwork, Trash } from '@phosphor-icons/react'
+import { Trash } from '@phosphor-icons/react'
 
 interface ListCardProps {
   title: string
@@ -32,9 +32,6 @@ export function ListCard({ title, description, id }: ListCardProps) {
     <article className={styles.listCard} onClick={handleListClick}>
       <header>
         <h3>{title}</h3>
-        <div className={styles.shareIconContainer}>
-          <ShareNetwork size={18} />
-        </div>
       </header>
       <div>
         <p>{description}</p>

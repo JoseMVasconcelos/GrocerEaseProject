@@ -12,6 +12,7 @@ import { WarningCircle } from '@phosphor-icons/react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { useAuthContext } from '../../hooks/useAuthContext'
+import { useShoppingListsContext } from '../../hooks/useShoppingListsContext'
 
 import {
   ListProduct,
@@ -20,6 +21,7 @@ import {
 } from '../../services/listProducts'
 
 import { getFormErrors } from '../../utils/getFormErrors'
+import { ShareListModal } from './components/ShareListModal'
 
 const newProductFormSchema = zod.object({
   productName: zod.string().min(1, 'Informe o nome do novo produto'),
@@ -30,9 +32,11 @@ type NewProductFormSchema = zod.infer<typeof newProductFormSchema>
 export function ListDetails() {
   const [products, setProducts] = useState<ListProduct[]>([])
   const { isAuthenticated, isLoading } = useAuthContext()
+  const { shoppingLists } = useShoppingListsContext()
 
-  const { id: listId } = useParams()
   const navigate = useNavigate()
+  const { id: listId } = useParams()
+  const list = shoppingLists.find((list) => list.id === listId)
 
   useEffect(() => {
     async function getData() {
@@ -78,7 +82,7 @@ export function ListDetails() {
 
   return (
     <div className={styles.pageContainer}>
-      <h1>Lista de compras angeloni</h1>
+      <h1>{list?.name}</h1>
       {!!errorMessages && (
         <div>
           {errorMessages.map((error) => {
@@ -101,7 +105,10 @@ export function ListDetails() {
         <CustomButton fullWidth={false}>Adicionar produto</CustomButton>
       </form>
       <section className={styles.listProducts}>
-        <h2>Produtos da Lista</h2>
+        <div>
+          <h2>Produtos da Lista</h2>
+          <ShareListModal />
+        </div>
         {products.map((product) => {
           return (
             <ListItem

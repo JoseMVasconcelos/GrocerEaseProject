@@ -1,0 +1,20 @@
+.triggerButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  color: var(--green-400);
+  background-color: var(--green-100);
+  cursor: pointer;
+  transition: opacity 0.125s ease-in-out;
+}
+
+.triggerButton:hover {
+  opacity: 0.85;
+}
+
+.triggerButton > span {
+  text-transform: uppercase;
+  font-size: 14px;
+}
