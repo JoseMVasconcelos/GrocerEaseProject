@@ -4,8 +4,15 @@ import styles from './UserPopover.module.css'
 import { User, X } from '@phosphor-icons/react'
 import { EditUserDataModal } from '../EditUserDataModal'
 import { LogoutModal } from '../LogoutModal'
+import { useState } from 'react'
 
 export function UserPopover() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  function closeModal() {
+    setIsModalOpen(false)
+  }
+
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
@@ -15,11 +22,11 @@ export function UserPopover() {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content className={styles.popoverContent}>
-          <Dialog.Root>
+          <Dialog.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
             <Dialog.Trigger asChild>
               <button className={styles.popoverButton}>Editar dados</button>
             </Dialog.Trigger>
-            <EditUserDataModal />
+            <EditUserDataModal closeModal={closeModal} />
           </Dialog.Root>
           <Dialog.Root>
             <Dialog.Trigger asChild>

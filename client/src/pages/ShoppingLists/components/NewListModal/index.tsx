@@ -11,6 +11,7 @@ import { CustomInput } from '../../../../components/CustomInput'
 import { CustomButton } from '../../../../components/CustomButton'
 import { WarningCircle, X } from '@phosphor-icons/react'
 import { useShoppingListsContext } from '../../../../hooks/useShoppingListsContext'
+import { useState } from 'react'
 
 const newListFormSchema = zod.object({
   name: zod.string().min(1, 'Informe um nome para a nova lista'),
@@ -20,6 +21,7 @@ const newListFormSchema = zod.object({
 type NewListFormSchema = zod.infer<typeof newListFormSchema>
 
 export function NewListModal() {
+  const [open, setOpen] = useState(false)
   const { onCreateList } = useShoppingListsContext()
 
   const {
@@ -34,12 +36,13 @@ export function NewListModal() {
   async function handleCreateNewList(listData: NewListFormSchema) {
     await onCreateList(listData)
     reset()
+    setOpen(false)
   }
 
   const errorMessages = getFormErrors<NewListFormSchema>(errors)
 
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
         <CustomButton fullWidth={false}>criar nova lista</CustomButton>
       </Dialog.Trigger>

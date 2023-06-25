@@ -23,7 +23,11 @@ const editUserDataFormSchema = zod.object({
 
 type EditUserDataFormSchema = zod.infer<typeof editUserDataFormSchema>
 
-export function EditUserDataModal() {
+interface EditUserDataModalProps {
+  closeModal: () => void
+}
+
+export function EditUserDataModal({ closeModal }: EditUserDataModalProps) {
   const [authError, setAuthError] = useState('')
   const { handleEditUserData } = useAuthContext()
   const {
@@ -39,6 +43,7 @@ export function EditUserDataModal() {
     try {
       await handleEditUserData(newUserData)
       reset()
+      closeModal()
     } catch (error: any) {
       setAuthError(
         error.response?.data?.message ||
