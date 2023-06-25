@@ -30,3 +30,7 @@
 .checkboxRoot svg {
   color: var(--green-400);
 }
+
+.checked > label {
+  text-decoration: line-through var(--green-300);
+}

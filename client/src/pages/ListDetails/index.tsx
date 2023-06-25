@@ -4,7 +4,7 @@ import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
-import { ListItem } from './components/ListItem'
+import { ListProduct } from './components/ListProduct'
 import { CustomButton } from '../../components/CustomButton'
 import { CustomInput } from '../../components/CustomInput'
 import { WarningCircle } from '@phosphor-icons/react'
@@ -15,7 +15,7 @@ import { useAuthContext } from '../../hooks/useAuthContext'
 import { useShoppingListsContext } from '../../hooks/useShoppingListsContext'
 
 import {
-  ListProduct,
+  ListProductType,
   createProduct,
   fetchProducts,
 } from '../../services/listProducts'
@@ -30,7 +30,7 @@ const newProductFormSchema = zod.object({
 type NewProductFormSchema = zod.infer<typeof newProductFormSchema>
 
 export function ListDetails() {
-  const [products, setProducts] = useState<ListProduct[]>([])
+  const [products, setProducts] = useState<ListProductType[]>([])
   const { isAuthenticated, isLoading } = useAuthContext()
   const { shoppingLists } = useShoppingListsContext()
 
@@ -113,7 +113,7 @@ export function ListDetails() {
         </div>
         {products.map((product) => {
           return (
-            <ListItem
+            <ListProduct
               key={product.id}
               id={product.id}
               name={product.name}

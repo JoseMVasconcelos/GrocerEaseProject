@@ -6,7 +6,7 @@ interface RawProduct {
   _id: string
 }
 
-export interface ListProduct {
+export interface ListProductType {
   name: string
   isChecked: boolean
   id: string
@@ -20,7 +20,7 @@ interface CreateProductResponse {
   data: RawProduct
 }
 
-function mapProductsData(rawProducts: RawProduct[]): ListProduct[] {
+function mapProductsData(rawProducts: RawProduct[]): ListProductType[] {
   return rawProducts.map((product) => {
     const { name, isChecked, _id: id } = product
     return {
@@ -31,7 +31,9 @@ function mapProductsData(rawProducts: RawProduct[]): ListProduct[] {
   })
 }
 
-export async function fetchProducts(listId: string): Promise<ListProduct[]> {
+export async function fetchProducts(
+  listId: string,
+): Promise<ListProductType[]> {
   const {
     data: { data: products },
   } = await api.get<FetchProductsResponse>(`/shoppingLists/${listId}/product`)
@@ -41,7 +43,7 @@ export async function fetchProducts(listId: string): Promise<ListProduct[]> {
 export async function createProduct(
   listId: string,
   productName: string,
-): Promise<ListProduct> {
+): Promise<ListProductType> {
   const {
     data: {
       data: { isChecked, name, _id: id },
