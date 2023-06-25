@@ -43,7 +43,7 @@ async function signUp(userCredentials) {
 
     const createdUser = {
         id: newUser._id,
-        username: newUser.name,
+        name: newUser.name,
         email: newUser.email
     };
 
@@ -57,15 +57,21 @@ async function signUp(userCredentials) {
  */
 async function login(userCredentials) {
     const { email, password } = userCredentials;
-
     const user = await User.findOne({ email });
+
+    if (!user) {
+        return {
+            message: 'Usuário inexistente',
+            status: 401
+        };
+    }
 
     const passwordIsCorrect = bcrypt.compareSync(password, user.password);
 
     // Se o usuário não existir, ou se a senha estiver incorreta, retornará Unauthorized.
-    if (!user || !passwordIsCorrect) {
-        return unauthorizedResponse = {
-            message: 'Credenciais inválidas ou usuário inexistente.',
+    if (!passwordIsCorrect) {
+        return {
+            message: 'Credenciais inválidas',
             status: 401
         };
     }
@@ -79,8 +85,8 @@ async function login(userCredentials) {
  * Faz o logout do usuário no sistema.
  * @param {String} userToken - Token do usuário.
  */
-async function logout(userToken) {
-    const logoutResult = new InvalidToken(userToken);
+async function logout(token) {
+    const logoutResult = new InvalidToken({ token });
     await logoutResult.save();
 }
 
@@ -114,10 +120,9 @@ async function patchUser(userId, updateData) {
     // Salvando na base.
     await existingUser.save();
 
-    return userUpdated = {
-        name: existingUser.name,
-        email: existingUser.email,
-    };
+    const newUserToken = generateBearerToken(existingUser)
+
+    return newUserToken
 }
 
 module.exports = { 

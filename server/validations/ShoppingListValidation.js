@@ -18,11 +18,21 @@ const updateListSchema = joi.object({
 });
 
 const shareListSchema = joi.object({
-    newOwnerId: joi.string().required()
+    email: joi.string().email().required()
+});
+
+const newProductSchema = joi.object({
+    productName: joi.string().required()
+});
+
+const toggleProductSchema = joi.object({
+    isChecked: joi.boolean().required()
 });
 
 module.exports = {
     createNewListSchema,
     updateListSchema,
-    shareListSchema
+    shareListSchema,
+    newProductSchema,
+    toggleProductSchema
 };

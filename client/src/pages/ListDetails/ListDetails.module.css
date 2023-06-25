@@ -30,6 +30,12 @@
   font-size: 1.75rem;
 }
 
+.listProducts > div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
 .error {
   display: flex;
   align-items: center;
@@ -45,6 +51,15 @@
   color: var(--warning);
 }
 
+@media screen and (max-width: 36rem) {
+  .listProducts > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 @media screen and (max-width: 32rem) {
   .pageContainer h1 {
     font-size: 1.5rem;
@@ -58,5 +73,4 @@
   .listProducts > h2 {
     font-size: 1.25rem;
   }
-
 }

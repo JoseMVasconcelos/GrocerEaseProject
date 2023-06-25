@@ -60,8 +60,8 @@ router.post('/login', async (req, res) => {
  */
 router.post('/logout', TokenAuthenticator, async (req, res) => {
     try{
-        const userToken = req.userData;
-        await logout(userToken);
+        const { token } = req.userData;
+        await logout(token);
         res.status(200).json({ message: "Logout realizado com sucesso.", message: "Token Invalidado"});
     } catch (error){
         return res.status(500).json({ exception: error.message });
@@ -70,7 +70,7 @@ router.post('/logout', TokenAuthenticator, async (req, res) => {
 
 /**
  * Atualiza campos do usuário.
- * @param {Object} req - Requisição contendo o token do usuário e os dados necessários para aatualizar.
+ * @param {Object} req - Requisição contendo o token do usuário e os dados necessários para atualizar.
  * @returns {Object} - Mensagem de sucesso e objeto com o usuário atualizado.
  */
 router.patch('/users/', TokenAuthenticator, async (req, res) => {
@@ -85,7 +85,7 @@ router.patch('/users/', TokenAuthenticator, async (req, res) => {
         if (patchResult && patchResult.status === 401){
             return res.status(401).json({message: patchResult.message});
         }
-        return res.status(201).json({ message: "Usuário atualizado com sucesso.", data: patchResult });
+        return res.status(201).json({ message: "Usuário atualizado com sucesso.", token: patchResult });
     } catch (error) {
         return res.status(500).json({exception: error.message });
     }

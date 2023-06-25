@@ -1,8 +1,5 @@
 import styles from './ListDetails.module.css'
 
-import { getFormErrors } from '../../utils/getFormErrors'
-import { mockListItems } from './mockListItems'
-
 import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -12,6 +9,20 @@ import { CustomButton } from '../../components/CustomButton'
 import { CustomInput } from '../../components/CustomInput'
 import { WarningCircle } from '@phosphor-icons/react'
 
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router'
+import { useAuthContext } from '../../hooks/useAuthContext'
+import { useShoppingListsContext } from '../../hooks/useShoppingListsContext'
+
+import {
+  ListProduct,
+  createProduct,
+  fetchProducts,
+} from '../../services/listProducts'
+
+import { getFormErrors } from '../../utils/getFormErrors'
+import { ShareListModal } from './components/ShareListModal'
+
 const newProductFormSchema = zod.object({
   productName: zod.string().min(1, 'Informe o nome do novo produto'),
 })
@@ -19,6 +30,25 @@ const newProductFormSchema = zod.object({
 type NewProductFormSchema = zod.infer<typeof newProductFormSchema>
 
 export function ListDetails() {
+  const [products, setProducts] = useState<ListProduct[]>([])
+  const { isAuthenticated, isLoading } = useAuthContext()
+  const { shoppingLists } = useShoppingListsContext()
+
+  const navigate = useNavigate()
+  const { id: listId } = useParams()
+  const list = shoppingLists.find((list) => list.id === listId)
+
+  useEffect(() => {
+    async function getData() {
+      if (typeof listId !== 'undefined') {
+        const products = await fetchProducts(listId)
+        setProducts(products)
+      }
+    }
+
+    getData()
+  }, [listId])
+
   const {
     register,
     handleSubmit,
@@ -27,15 +57,32 @@ export function ListDetails() {
     resolver: zodResolver(newProductFormSchema),
   })
 
-  function handleAddNewProduct(newProductData: NewProductFormSchema) {
-    console.log(newProductData)
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login')
+    }
+  }, [isAuthenticated, navigate])
+
+  async function handleAddNewProduct(newProductData: NewProductFormSchema) {
+    if (typeof listId !== 'undefined') {
+      const product = await createProduct(listId, newProductData.productName)
+      setProducts((prevProducts) => [...prevProducts, product])
+    }
   }
 
   const errorMessages = getFormErrors<NewProductFormSchema>(errors)
 
+  if (!isAuthenticated) {
+    return <></>
+  }
+
+  if (isLoading) {
+    return <h1>loading...</h1>
+  }
+
   return (
     <div className={styles.pageContainer}>
-      <h1>Lista de compras angeloni</h1>
+      <h1>{list?.name}</h1>
       {!!errorMessages && (
         <div>
           {errorMessages.map((error) => {
@@ -58,14 +105,17 @@ export function ListDetails() {
         <CustomButton fullWidth={false}>Adicionar produto</CustomButton>
       </form>
       <section className={styles.listProducts}>
-        <h2>Produtos da Lista</h2>
-        {mockListItems.map((listItem) => {
+        <div>
+          <h2>Produtos da Lista</h2>
+          <ShareListModal />
+        </div>
+        {products.map((product) => {
           return (
             <ListItem
-              key={listItem.id}
-              id={listItem.id}
-              name={listItem.name}
-              isChecked={listItem.isChecked}
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              isChecked={product.isChecked}
             />
           )
         })}

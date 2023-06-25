@@ -1,34 +1,43 @@
 import styles from './ListCard.module.css'
-import { Trash } from '@phosphor-icons/react'
+
+import React from 'react'
+
 import { useNavigate } from 'react-router-dom'
+import { useShoppingListsContext } from '../../../../hooks/useShoppingListsContext'
+
+import { Trash } from '@phosphor-icons/react'
 
 interface ListCardProps {
   title: string
   description: string
-  createdAt: string
+  id: string
 }
 
-export function ListCard({ title, description, createdAt }: ListCardProps) {
+export function ListCard({ title, description, id }: ListCardProps) {
+  const { onDeleteList } = useShoppingListsContext()
   const navigate = useNavigate()
 
   function handleListClick() {
-    navigate('/shopping-lists/id')
+    navigate(`/shopping-lists/${id}`)
+  }
+
+  async function handleTrashButtonClick(
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) {
+    e.stopPropagation()
+    await onDeleteList(id)
   }
 
   return (
     <article className={styles.listCard} onClick={handleListClick}>
       <header>
         <h3>{title}</h3>
-        <span>{createdAt}</span>
       </header>
       <div>
         <p>{description}</p>
         <div
-          className={styles.iconContainer}
-          onClick={(e) => {
-            console.log('trash icon')
-            e.stopPropagation()
-          }}
+          className={styles.trashIconContainer}
+          onClick={handleTrashButtonClick}
         >
           <Trash size={22} />
         </div>

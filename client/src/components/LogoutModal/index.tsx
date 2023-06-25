@@ -2,8 +2,15 @@ import styles from './LogoutModal.module.css'
 import * as Dialog from '@radix-ui/react-dialog'
 import { X } from '@phosphor-icons/react'
 import { CustomButton } from '../CustomButton'
+import { useAuthContext } from '../../hooks/useAuthContext'
 
 export function LogoutModal() {
+  const { handleLogout } = useAuthContext()
+
+  async function handleLogoutButtonClick() {
+    await handleLogout()
+  }
+
   return (
     <Dialog.Portal>
       <Dialog.Overlay className={styles.dialogOverlay}>
@@ -15,7 +22,7 @@ export function LogoutModal() {
             <X size={24} />
           </Dialog.Close>
           <div className={styles.buttonsContainer}>
-            <Dialog.Close asChild>
+            <Dialog.Close onClick={handleLogoutButtonClick} asChild>
               <CustomButton fullWidth={false}>Sim</CustomButton>
             </Dialog.Close>
             <Dialog.Close asChild>

@@ -10,6 +10,7 @@ import { getFormErrors } from '../../../../utils/getFormErrors'
 import { CustomInput } from '../../../../components/CustomInput'
 import { CustomButton } from '../../../../components/CustomButton'
 import { WarningCircle, X } from '@phosphor-icons/react'
+import { useShoppingListsContext } from '../../../../hooks/useShoppingListsContext'
 
 const newListFormSchema = zod.object({
   name: zod.string().min(1, 'Informe um nome para a nova lista'),
@@ -19,6 +20,8 @@ const newListFormSchema = zod.object({
 type NewListFormSchema = zod.infer<typeof newListFormSchema>
 
 export function NewListModal() {
+  const { onCreateList } = useShoppingListsContext()
+
   const {
     register,
     handleSubmit,
@@ -27,8 +30,8 @@ export function NewListModal() {
     resolver: zodResolver(newListFormSchema),
   })
 
-  function handleCreateNewList(newListData: NewListFormSchema) {
-    console.log(newListData)
+  async function handleCreateNewList(listData: NewListFormSchema) {
+    await onCreateList(listData)
   }
 
   const errorMessages = getFormErrors<NewListFormSchema>(errors)

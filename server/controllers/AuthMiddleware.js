@@ -9,7 +9,6 @@ function TokenAuthenticator(req, res, next) {
     // Buscar o token no cabeçalho.
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1]
-
     if (token == null) return res.sendStatus(401);
 
     // Verifica a integridade do token.
@@ -25,7 +24,11 @@ function TokenAuthenticator(req, res, next) {
 
         // O payload quando decodificado será armazenado no req.userData,
         // E poderá ser acessado em qualquer outra rota protegida.
-        req.userData = decoded;
+  
+        req.userData = {
+            ...decoded,
+            token
+        };
 
         next();
     });

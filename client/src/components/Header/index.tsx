@@ -2,25 +2,27 @@ import styles from './Header.module.css'
 import logo from './../../assets/logo.png'
 import { UserPopover } from '../UserPopover'
 import { Link } from 'react-router-dom'
+import { useAuthContext } from '../../hooks/useAuthContext'
 
-interface HeaderProps {
-  isLoggedIn: boolean
-}
+export function Header() {
+  const { isAuthenticated } = useAuthContext()
 
-export function Header({ isLoggedIn }: HeaderProps) {
   return (
     <header className={styles.header}>
       <div
         className={
-          isLoggedIn
+          isAuthenticated
             ? styles.contentContainer
             : `${styles.contentContainer} ${styles.userPopoverHidden}`
         }
       >
-        <Link to={isLoggedIn ? '/shopping-lists' : '/'} className={styles.logo}>
+        <Link
+          to={isAuthenticated ? '/shopping-lists' : '/'}
+          className={styles.logo}
+        >
           <img src={logo} alt="" />
         </Link>
-        {isLoggedIn && <UserPopover />}
+        {isAuthenticated && <UserPopover />}
       </div>
     </header>
   )
