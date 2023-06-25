@@ -25,6 +25,7 @@ export function NewListModal() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<NewListFormSchema>({
     resolver: zodResolver(newListFormSchema),
@@ -32,6 +33,7 @@ export function NewListModal() {
 
   async function handleCreateNewList(listData: NewListFormSchema) {
     await onCreateList(listData)
+    reset()
   }
 
   const errorMessages = getFormErrors<NewListFormSchema>(errors)

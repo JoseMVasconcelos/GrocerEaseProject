@@ -52,6 +52,7 @@ export function ListDetails() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<NewProductFormSchema>({
     resolver: zodResolver(newProductFormSchema),
@@ -68,6 +69,7 @@ export function ListDetails() {
       const product = await createProduct(listId, newProductData.productName)
       setProducts((prevProducts) => [...prevProducts, product])
     }
+    reset()
   }
 
   const errorMessages = getFormErrors<NewProductFormSchema>(errors)

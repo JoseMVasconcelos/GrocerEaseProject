@@ -38,6 +38,7 @@ export function SignUp() {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm<SignUpFormSchema>({
     resolver: zodResolver(signUpFormSchema),
@@ -46,8 +47,8 @@ export function SignUp() {
   async function onSignUp(signUpData: SignUpFormSchema) {
     try {
       await handleSignUp(signUpData)
+      reset()
     } catch (error: any) {
-      console.log(error)
       setAuthError(
         error.response?.data?.message ||
           'Ocorreu um erro ao acessar o servidor',

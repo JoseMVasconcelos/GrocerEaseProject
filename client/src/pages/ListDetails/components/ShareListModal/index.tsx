@@ -12,6 +12,7 @@ import { CustomInput } from '../../../../components/CustomInput'
 import { CustomButton } from '../../../../components/CustomButton'
 import { ShareNetwork, WarningCircle, X } from '@phosphor-icons/react'
 import { shareList } from '../../../../services/shoppingLists'
+import { useState } from 'react'
 
 const shareListFormSchema = zod.object({
   email: zod.string().email('Informe um email válido'),
@@ -24,17 +25,27 @@ interface ShareListModalProps {
 }
 
 export function ShareListModal({ listId }: ShareListModalProps) {
+  const [authError, setAuthError] = useState('')
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ShareListFormSchema>({
     resolver: zodResolver(shareListFormSchema),
   })
 
   async function handleShareList(shareListFormData: ShareListFormSchema) {
-    if (listId) {
-      await shareList(listId, shareListFormData.email)
+    try {
+      if (listId) {
+        await shareList(listId, shareListFormData.email)
+      }
+      reset()
+    } catch (error: any) {
+      setAuthError(
+        error.response?.data?.message ||
+          'Ocorreu um erro ao acessar o servidor',
+      )
     }
   }
 
@@ -60,6 +71,12 @@ export function ShareListModal({ listId }: ShareListModalProps) {
             <Dialog.Description className={modalStyles.dialogDescription}>
               Insira o email da pessoa com quem você deseja compartilhar
             </Dialog.Description>
+            {authError.length > 0 && (
+              <div className={modalStyles.error}>
+                <WarningCircle />
+                <h3>{authError}</h3>
+              </div>
+            )}
             {!!errorMessages && (
               <div>
                 {errorMessages.map((error) => {

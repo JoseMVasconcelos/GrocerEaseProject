@@ -11,6 +11,7 @@ import { CustomButton } from '../CustomButton'
 import { CustomInput } from '../CustomInput'
 import { WarningCircle, X } from '@phosphor-icons/react'
 import { useAuthContext } from '../../hooks/useAuthContext'
+import { useState } from 'react'
 
 const editUserDataFormSchema = zod.object({
   email: zod.string().email('Informe um email válido'),
@@ -23,17 +24,27 @@ const editUserDataFormSchema = zod.object({
 type EditUserDataFormSchema = zod.infer<typeof editUserDataFormSchema>
 
 export function EditUserDataModal() {
+  const [authError, setAuthError] = useState('')
   const { handleEditUserData } = useAuthContext()
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<EditUserDataFormSchema>({
     resolver: zodResolver(editUserDataFormSchema),
   })
 
   async function onEditUserData(newUserData: EditUserDataFormSchema) {
-    await handleEditUserData(newUserData)
+    try {
+      await handleEditUserData(newUserData)
+      reset()
+    } catch (error: any) {
+      setAuthError(
+        error.response?.data?.message ||
+          'Ocorreu um erro ao acessar o servidor',
+      )
+    }
   }
 
   const errorMessages = getFormErrors<EditUserDataFormSchema>(errors)
@@ -48,6 +59,12 @@ export function EditUserDataModal() {
           <Dialog.Close className={styles.closeButton}>
             <X size={24} />
           </Dialog.Close>
+          {authError.length > 0 && (
+            <div className={styles.error}>
+              <WarningCircle />
+              <h2>{authError}</h2>
+            </div>
+          )}
           {!!errorMessages && (
             <div>
               {errorMessages.map((error) => {

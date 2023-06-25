@@ -34,6 +34,7 @@ export function Login() {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm<LoginFormSchema>({
     resolver: zodResolver(loginFormSchema),
@@ -43,6 +44,7 @@ export function Login() {
   async function onLogin(loginData: LoginFormSchema) {
     try {
       await handleLogin(loginData)
+      reset()
     } catch (error: any) {
       setAuthError(
         error.response?.data?.message ||
