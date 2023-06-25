@@ -14,7 +14,7 @@ function generateBearerToken(user) {
     };
 
     // Gera o JWT.
-    const token = jwt.sign(payload, process.env.TOKEN_SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign(payload, process.env.TOKEN_SECRET_KEY);
 
     return token;
 }

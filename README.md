@@ -15,8 +15,9 @@
 - [x] checar responsividade
 - [x] terminar integração listas
 - [x] compartilhar listas
-- [ ] mostrar erro autenticacao na tela
-- [ ] arrumar min height lista
+- [x] mostrar erro autenticacao na tela
+- [x] arrumar min height lista
+- [x] refresh token front
 - [ ] spinner
 - [ ] limpar o codigo
 

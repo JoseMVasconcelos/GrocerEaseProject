@@ -16,9 +16,6 @@ function TokenAuthenticator(req, res, next) {
     // Caso aconteça outro erro retorna Forbidden.
     jwt.verify(token, process.env.TOKEN_SECRET_KEY, (error, decoded) => {
         if (error) {
-            if (error.name === 'TokenExpiredError') {
-                return res.status(401).json({ message: 'O Token expirou'});
-            }
             return res.sendStatus(403);
         }
 
