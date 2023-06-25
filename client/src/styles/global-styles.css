@@ -1,5 +1,4 @@
 :root {
-  /* TODO -> remove unused variables */
   --white: #ffffff;
 
   --green-100: #cee2d2;
@@ -11,13 +10,6 @@
   --base-input: #ededed;
   --base-input-color: #8d8686;
   --warning: #E1110A;
-  --gray: #aca4a4;
-
-  --normal-title: 700;
-  --bold-title: 800;
-
-  --normal-text: 400;
-  --bold-text: 700;
 }
 
 * {
@@ -42,11 +34,11 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font: var(--normal-title) 2rem 'Baloo 2', cursive;
+  font: 700 2rem 'Baloo 2', cursive;
 }
 
 body, input, textarea, button {
-  font: var(--normal-text) 1rem / 1.6 'Roboto', sans-serif;
+  font: 400 1rem / 1.6 'Roboto', sans-serif;
 }
 
 ::-webkit-scrollbar {
