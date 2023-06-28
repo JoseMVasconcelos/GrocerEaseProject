@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { DefaultLayout } from '../layouts/DefaultLayout'
 import { Home } from '../pages/Home'
 import { SignUp } from '../pages/SignUp'
@@ -15,6 +15,7 @@ export function Router() {
         <Route path="/login" element={<Login />} />
         <Route path="/shopping-lists" element={<ShoppingLists />} />
         <Route path="/shopping-lists/:id" element={<ListDetails />} />
+        <Route path="/*" element={<Navigate to="/" />} />
       </Route>
     </Routes>
   )
